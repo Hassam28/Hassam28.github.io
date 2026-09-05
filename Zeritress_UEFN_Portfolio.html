@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Zeritress - UEFN developer. Ten shipped Fortnite islands, 855M minutes played, $30K+ creator revenue. Verse systems, level design, game design and live-ops.">
+<meta property="og:title" content="Zeritress - UEFN Developer">
+<meta property="og:description" content="Ten Fortnite islands shipped. 14.3 million hours played. Verse systems, level design and live-ops.">
+<meta property="og:type" content="website">
+<style>
+html{color-scheme:light dark}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Zeritress Islands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F1F2F4;
+  --surface:#FFFFFF;
+  --surface-2:#F7F8F9;
+  --ink:#13161D;
+  --ink-2:#3D4350;
+  --muted:#6B7280;
+  --line:#DEE1E7;
+  --line-2:#C6CAD3;
+  --gold:#9A6708;
+  --gold-hi:#C4870E;
+  --gold-wash:#F7EFDC;
+  --data:#0C6B74;
+  --data-fill:rgba(12,107,116,.14);
+  --live:#1A6E43;
+  --live-bg:#E3F1E9;
+  --arch:#697080;
+  --arch-bg:#E7E9ED;
+  --focus:#0C6B74;
+  --shadow:0 1px 2px rgba(19,22,29,.05), 0 8px 24px -12px rgba(19,22,29,.12);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C0F15;
+    --surface:#14181F;
+    --surface-2:#1A1F29;
+    --ink:#E9EBF0;
+    --ink-2:#B4BAC6;
+    --muted:#848C9C;
+    --line:#232935;
+    --line-2:#333B4A;
+    --gold:#EFB244;
+    --gold-hi:#FFC868;
+    --gold-wash:#241B0B;
+    --data:#45C6D1;
+    --data-fill:rgba(69,198,209,.16);
+    --live:#54CE8B;
+    --live-bg:#122A1E;
+    --arch:#8A92A2;
+    --arch-bg:#1F242E;
+    --focus:#45C6D1;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C0F15;
+  --surface:#14181F;
+  --surface-2:#1A1F29;
+  --ink:#E9EBF0;
+  --ink-2:#B4BAC6;
+  --muted:#848C9C;
+  --line:#232935;
+  --line-2:#333B4A;
+  --gold:#EFB244;
+  --gold-hi:#FFC868;
+  --gold-wash:#241B0B;
+  --data:#45C6D1;
+  --data-fill:rgba(69,198,209,.16);
+  --live:#54CE8B;
+  --live-bg:#122A1E;
+  --arch:#8A92A2;
+  --arch-bg:#1F242E;
+  --focus:#45C6D1;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+@media(max-width:640px){.wrap{padding:0 18px}}
+
+/* ---------- shared type ---------- */
+.display{
+  font-family:Archivo,"Arial Narrow",Arial,sans-serif;
+  font-weight:800;
+  letter-spacing:-.022em;
+  line-height:1.04;
+  text-wrap:balance;
+  margin:0;
+}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0;
+}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.sect-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.sect-title{font-family:Archivo,sans-serif;font-weight:800;font-size:13px;letter-spacing:.13em;text-transform:uppercase;margin:0}
+.sect-note{font-size:13px;color:var(--muted);margin:0}
+section{padding:56px 0}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+}
+.masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px;flex-wrap:wrap}
+.wordmark{font-family:Archivo,sans-serif;font-weight:900;font-size:16px;letter-spacing:.1em;text-transform:uppercase}
+.wordmark span{color:var(--gold)}
+.avail{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--live);background:var(--live-bg);
+  border:1px solid color-mix(in srgb,var(--live) 26%,transparent);
+  padding:5px 11px;border-radius:999px;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--live);flex:none}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 48px;background:var(--surface);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px;align-items:stretch}}
+.hero h1{font-size:clamp(34px,5.4vw,58px);margin:16px 0 0}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.lede{font-size:16.5px;line-height:1.68;color:var(--ink-2);max-width:60ch;margin:20px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+
+/* hero chart panel */
+.panel{
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:18px 18px 12px;
+  position:relative;
+}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:2px}
+.panel-title{font-family:Archivo,sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0}
+.panel-sub{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0}
+.chart-holder{position:relative}
+.chart-holder svg{display:block;width:100%;height:auto}
+.tip{
+  position:absolute;pointer-events:none;opacity:0;transition:opacity .12s;
+  background:var(--ink);color:var(--bg);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;font-variant-numeric:tabular-nums;
+  padding:5px 8px;border-radius:5px;white-space:nowrap;transform:translate(-50%,-140%);z-index:5;
+}
+
+/* ---------- metrics band ---------- */
+.metrics{border-bottom:1px solid var(--line);background:var(--bg)}
+.metrics .wrap{padding-top:0;padding-bottom:0}
+.mgrid{display:grid;grid-template-columns:repeat(6,1fr)}
+@media(max-width:860px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.mgrid{grid-template-columns:repeat(2,1fr)}}
+.metric{padding:26px 20px 26px 0;border-right:1px solid var(--line)}
+.metric:last-child{border-right:0}
+@media(max-width:860px){
+  .metric{border-bottom:1px solid var(--line);padding-right:16px}
+  .metric:nth-child(3n){border-right:0}
+  .metric:nth-last-child(-n+3){border-bottom:0}
+}
+@media(max-width:520px){
+  .metric:nth-child(3n){border-right:1px solid var(--line)}
+  .metric:nth-child(2n){border-right:0}
+  .metric:nth-last-child(-n+3){border-bottom:1px solid var(--line)}
+  .metric:nth-last-child(-n+2){border-bottom:0}
+}
+.metric .v{
+  font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(24px,3.1vw,32px);
+  letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;display:block;
+}
+.metric.hero-metric .v{color:var(--gold)}
+.metric .k{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-top:9px;line-height:1.45;
+}
+
+/* ---------- flagships ---------- */
+.flag{
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:start;
+  padding:34px 0;border-top:1px solid var(--line);
+}
+.flag:first-of-type{border-top:1px solid var(--line-2)}
+@media(max-width:820px){.flag{grid-template-columns:1fr;gap:24px}}
+.flag-rank{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--muted);
+  display:block;margin-bottom:10px;
+}
+.flag h3{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(21px,2.6vw,28px);letter-spacing:-.02em;line-height:1.12;margin:0;text-wrap:balance}
+.flag-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+.code{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:500;letter-spacing:.08em;
+  color:var(--ink);background:var(--gold-wash);
+  border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);
+  padding:3px 9px;border-radius:4px;text-decoration:none;white-space:nowrap;
+}
+.code:hover{border-color:var(--gold);color:var(--gold)}
+.by{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.flag p{color:var(--ink-2);margin:14px 0 0;max-width:62ch;font-size:14.6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding:0;list-style:none}
+.tags li{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--line-2);padding:3px 8px;border-radius:3px;
+}
+.flag-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;max-width:460px}
+.fs .v{font-family:Archivo,sans-serif;font-weight:700;font-size:19px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
+.fs .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);display:block;margin-top:6px;line-height:1.4}
+.spark-box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 14px 8px}
+.spark-box .panel-title{font-size:10.5px;letter-spacing:.09em}
+.spark-box .panel-sub{font-size:9.5px;margin-top:3px}
+
+/* ---------- roster table ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:840px}
+th,td{text-align:right;padding:13px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th:nth-child(2),td:nth-child(2){text-align:left}
+th{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:500;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);background:var(--surface-2);
+  position:sticky;top:0;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+.t-name{font-weight:600;font-size:14px;max-width:270px;white-space:normal;line-height:1.35}
+.t-code{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line-2)}
+.t-code:hover{color:var(--gold);border-color:var(--gold)}
+td.num{font-family:"IBM Plex Mono",monospace;font-size:13px;font-variant-numeric:tabular-nums}
+.pill{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;display:inline-block;
+}
+.pill.live{color:var(--live);background:var(--live-bg)}
+.pill.arch{color:var(--arch);background:var(--arch-bg)}
+tfoot td{
+  border-top:2px solid var(--line-2);border-bottom:0;font-weight:600;
+  font-family:"IBM Plex Mono",monospace;font-size:13px;font-variant-numeric:tabular-nums;
+  background:var(--surface-2);
+}
+tfoot td:first-child{font-family:Archivo,sans-serif;letter-spacing:.08em;text-transform:uppercase;font-size:11px}
+
+/* ---------- capabilities ---------- */
+.caps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px}
+@media(max-width:760px){.caps{grid-template-columns:1fr}}
+.cap{padding:24px 0;border-top:1px solid var(--line)}
+.cap h4{font-family:Archivo,sans-serif;font-weight:800;font-size:16px;letter-spacing:-.01em;margin:0 0 8px}
+.cap p{margin:0;color:var(--ink-2);font-size:14.4px;max-width:52ch}
+.cap .proof{
+  display:block;margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.03em;color:var(--gold);
+}
+
+/* ---------- systems chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+.chips li{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.02em;
+  border:1px solid var(--line-2);border-radius:999px;padding:6px 14px;color:var(--ink-2);
+  background:var(--surface);
+}
+
+/* ---------- liveops callout ---------- */
+.callout{
+  border-left:3px solid var(--gold);background:var(--surface);
+  padding:24px 26px;border-radius:0 8px 8px 0;box-shadow:var(--shadow);
+}
+.callout h4{font-family:Archivo,sans-serif;font-weight:800;font-size:17px;margin:0 0 10px;letter-spacing:-.01em}
+.callout p{margin:0;color:var(--ink-2);max-width:70ch;font-size:14.6px}
+.callout .mono{color:var(--ink);font-weight:500}
+
+/* ---------- contact ---------- */
+.contact{background:var(--surface);border-top:1px solid var(--line)}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:48px;align-items:start}
+@media(max-width:820px){.contact-grid{grid-template-columns:1fr;gap:28px}}
+.contact h2{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(26px,4vw,38px);letter-spacing:-.025em;margin:14px 0 0;line-height:1.1}
+.contact p{color:var(--ink-2);margin:16px 0 0;max-width:52ch}
+.links{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none}
+.links li{border-top:1px solid var(--line);padding:15px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.links li:last-child{border-bottom:1px solid var(--line)}
+.links .lk{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.links .lv{font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:var(--ink)}
+.links .lv{text-align:right;word-break:break-word}
+a.lnk{text-decoration:none;border-bottom:1px solid var(--line-2)}
+a.lnk:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ---------- footer ---------- */
+footer{background:var(--bg);border-top:1px solid var(--line);padding:30px 0 44px}
+footer p{font-size:12.2px;color:var(--muted);margin:0 0 7px;max-width:78ch;line-height:1.6}
+footer a{color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="wordmark">Zeritress<span>.</span></div>
+    <span class="avail"><span class="dot"></span>Available for UEFN contract work</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">UEFN &middot; Fortnite Creative &middot; 2023&ndash;2026</p>
+      <h1 class="display">Ten islands shipped.<br><em>14.3 million hours</em> played.</h1>
+      <p class="lede">
+        I'm <strong>Zeritress</strong>, a UEFN developer working end&#8209;to&#8209;end &mdash; Verse systems,
+        level design, and the economy balancing that decides whether an island survives its first week.
+        Ten published islands across four creator partners, together generating over
+        <strong>$30,000 in creator revenue</strong> and 855&nbsp;million minutes of playtime.
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <p class="panel-title">Fort Lock &mdash; concurrent players</p>
+      </div>
+      <p class="panel-sub">Rolling 24h &middot; 5 Sep 2026</p>
+      <div class="chart-holder" id="heroHolder">
+        <svg id="heroChart" viewBox="0 0 460 190" role="img"
+             aria-label="Concurrent player count on Fort Lock over 24 hours, ranging from 67 to a peak of 396 players."></svg>
+        <div class="tip" id="heroTip"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="wrap">
+    <div class="mgrid">
+      <div class="metric hero-metric"><span class="v">$30K+</span><span class="k">Creator revenue<br>generated</span></div>
+      <div class="metric"><span class="v">855.3M</span><span class="k">Minutes<br>played</span></div>
+      <div class="metric"><span class="v">1.30M</span><span class="k">Island<br>favorites</span></div>
+      <div class="metric"><span class="v">44,962</span><span class="k">Highest peak<br>concurrents</span></div>
+      <div class="metric"><span class="v">482</span><span class="k">Versions<br>published</span></div>
+      <div class="metric"><span class="v">10</span><span class="k">Islands across<br>4 partners</span></div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="sect-title">Flagship islands</h2>
+      <p class="sect-note">The three that carry the numbers &mdash; each still live and still being updated.</p>
+    </div>
+
+    <article class="flag">
+      <div>
+        <span class="flag-rank">#223 by minutes played &mdash; all of Fortnite Creative</span>
+        <h3>PLAYSTATION VS XBOX</h3>
+        <div class="flag-meta">
+          <a class="code" href="https://fortnite.gg/island/8222-6801-8250" target="_blank" rel="noopener">8222-6801-8250</a>
+          <span class="by">for whoodsxp</span>
+          <span class="pill live">Live &middot; v182</span>
+        </div>
+        <p>
+          Console-tribalism team PvP that has outlived three years of Fortnite chapters. Capture the flag,
+          rotating fun-weapon loadouts and a ranked progression layer added post-launch to pull returning
+          players back into the queue. Still receiving updates &mdash; the last one shipped three days ago.
+        </p>
+        <ul class="tags"><li>Team Deathmatch</li><li>Gun Game</li><li>Teams</li><li>Zone Wars</li><li>16 players</li></ul>
+        <div class="flag-stats">
+          <div class="fs"><span class="v">552.5M</span><span class="k">Minutes played</span></div>
+          <div class="fs"><span class="v">44,962</span><span class="k">All-time peak CCU</span></div>
+          <div class="fs"><span class="v">810.8K</span><span class="k">Favorites &middot; #211</span></div>
+        </div>
+      </div>
+      <div class="spark-box">
+        <p class="panel-title">Concurrents &mdash; 24h</p>
+        <p class="panel-sub">Peak 164 &middot; 5 Sep 2026</p>
+        <div class="chart-holder"><svg class="spark" data-curve="psxbox" viewBox="0 0 250 62" role="img" aria-label="24-hour concurrent players for Playstation vs Xbox, peaking at 164."></svg></div>
+      </div>
+    </article>
+
+    <article class="flag">
+      <div>
+        <span class="flag-rank">#43 for day-1 retention &mdash; all of Fortnite Creative</span>
+        <h3>FORT LOCK: SOCCER / FOOTBALL</h3>
+        <div class="flag-meta">
+          <a class="code" href="https://fortnite.gg/island/1652-7714-7390" target="_blank" rel="noopener">1652-7714-7390</a>
+          <span class="by">for dansam</span>
+          <span class="pill live">Live &middot; v178</span>
+        </div>
+        <p>
+          5v5 arcade soccer built on a custom dribble-charge-shoot loop, tuned until the ball felt right
+          rather than merely functional. It is the retention piece I'm proudest of: 40% of players come back
+          the next day and 24% are still playing a week later, on 35-minute average sessions.
+        </p>
+        <ul class="tags"><li>Sports</li><li>Minigame</li><li>Party Game</li><li>10 players</li><li>#12 in Sports &amp; Racing</li></ul>
+        <div class="flag-stats">
+          <div class="fs"><span class="v">121.1M</span><span class="k">Minutes played</span></div>
+          <div class="fs"><span class="v">40%</span><span class="k">Day-1 retention</span></div>
+          <div class="fs"><span class="v">35.3<span style="font-size:13px"> min</span></span><span class="k">Avg. playtime</span></div>
+        </div>
+      </div>
+      <div class="spark-box">
+        <p class="panel-title">Concurrents &mdash; 24h</p>
+        <p class="panel-sub">Peak 396 &middot; 5 Sep 2026</p>
+        <div class="chart-holder"><svg class="spark" data-curve="fortlock" viewBox="0 0 250 62" role="img" aria-label="24-hour concurrent players for Fort Lock, peaking at 396."></svg></div>
+      </div>
+    </article>
+
+    <article class="flag">
+      <div>
+        <span class="flag-rank">#678 by minutes played &mdash; all of Fortnite Creative</span>
+        <h3>FASHION SHOW &mdash; 50 PLAYERS</h3>
+        <div class="flag-meta">
+          <a class="code" href="https://fortnite.gg/island/0235-8623-3183" target="_blank" rel="noopener">0235-8623-3183</a>
+          <span class="by">for jeanfils</span>
+          <span class="pill live">Live &middot; v52</span>
+        </div>
+        <p>
+          The hardest scale problem in the roster: 50 players in one lobby, live skin-swapping, player-elected
+          judges and 64 rotating themes &mdash; all of it needing to stay readable and performant while every
+          slot is filled with a different cosmetic loadout.
+        </p>
+        <ul class="tags"><li>Fashion</li><li>Role Playing</li><li>Party Game</li><li>50 players</li><li>64 themes</li></ul>
+        <div class="flag-stats">
+          <div class="fs"><span class="v">140.5M</span><span class="k">Minutes played</span></div>
+          <div class="fs"><span class="v">178.5K</span><span class="k">Favorites</span></div>
+          <div class="fs"><span class="v">2,314</span><span class="k">All-time peak CCU</span></div>
+        </div>
+      </div>
+      <div class="spark-box">
+        <p class="panel-title">Concurrents &mdash; 24h</p>
+        <p class="panel-sub">Peak 193 &middot; 5 Sep 2026</p>
+        <div class="chart-holder"><svg class="spark" data-curve="fashion" viewBox="0 0 250 62" role="img" aria-label="24-hour concurrent players for Fashion Show, peaking at 193."></svg></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="sect-title">Full roster &mdash; 10 islands</h2>
+      <p class="sect-note">Every island I've shipped, live and archived. Codes link to their public stat pages.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Island</th>
+            <th scope="col">Code</th>
+            <th scope="col">Partner</th>
+            <th scope="col">Released</th>
+            <th scope="col">Minutes</th>
+            <th scope="col">Peak CCU</th>
+            <th scope="col">Favorites</th>
+            <th scope="col">Ver.</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="t-name">Playstation vs Xbox</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/8222-6801-8250" target="_blank" rel="noopener">8222-6801-8250</a></td>
+            <td class="num">whoodsxp</td><td class="num">Aug 2023</td>
+            <td class="num">552.5M</td><td class="num">44,962</td><td class="num">810.8K</td><td class="num">182</td>
+            <td><span class="pill live">Live</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">Fashion Show &mdash; 50 Players</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/0235-8623-3183" target="_blank" rel="noopener">0235-8623-3183</a></td>
+            <td class="num">jeanfils</td><td class="num">Sep 2024</td>
+            <td class="num">140.5M</td><td class="num">2,314</td><td class="num">178.5K</td><td class="num">52</td>
+            <td><span class="pill live">Live</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">Fort Lock: Soccer / Football</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/1652-7714-7390" target="_blank" rel="noopener">1652-7714-7390</a></td>
+            <td class="num">dansam</td><td class="num">Jan 2025</td>
+            <td class="num">121.1M</td><td class="num">2,126</td><td class="num">154.6K</td><td class="num">178</td>
+            <td><span class="pill live">Live</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">Supermarket Simulator</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/6892-2861-6290" target="_blank" rel="noopener">6892-2861-6290</a></td>
+            <td class="num">epiclabsgg</td><td class="num">Mar 2025</td>
+            <td class="num">36.2M</td><td class="num">3,077</td><td class="num">131.2K</td><td class="num">32</td>
+            <td><span class="pill live">Live</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">Escape Storm for Brainrots</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/9994-7329-3634" target="_blank" rel="noopener">9994-7329-3634</a></td>
+            <td class="num">whoodsxp</td><td class="num">Apr 2026</td>
+            <td class="num">2.0M</td><td class="num">343</td><td class="num">11.5K</td><td class="num">9</td>
+            <td><span class="pill live">Live</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">Run Fast for Brainrots</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/6221-1410-0485" target="_blank" rel="noopener">6221-1410-0485</a></td>
+            <td class="num">epiclabsgg</td><td class="num">Apr 2026</td>
+            <td class="num">1.1M</td><td class="num">674</td><td class="num">4.9K</td><td class="num">9</td>
+            <td><span class="pill live">Live</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">Hospital Tycoon</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/5827-0740-8706" target="_blank" rel="noopener">5827-0740-8706</a></td>
+            <td class="num">epiclabsgg</td><td class="num">Oct 2025</td>
+            <td class="num">921.9K</td><td class="num">349</td><td class="num">2.9K</td><td class="num">5</td>
+            <td><span class="pill arch">Archived</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">A Singing Brainrot</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/6692-6059-3920" target="_blank" rel="noopener">6692-6059-3920</a></td>
+            <td class="num">epiclabsgg</td><td class="num">Jul 2025</td>
+            <td class="num">421.2K</td><td class="num">689</td><td class="num">2.6K</td><td class="num">8</td>
+            <td><span class="pill arch">Archived</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">War Tycoon</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/6982-2781-5425" target="_blank" rel="noopener">6982-2781-5425</a></td>
+            <td class="num">epiclabsgg</td><td class="num">Dec 2025</td>
+            <td class="num">345.6K</td><td class="num">413</td><td class="num">1.0K</td><td class="num">4</td>
+            <td><span class="pill arch">Archived</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">New Year Tycoon</td>
+            <td><a class="t-code" href="https://fortnite.gg/island/5272-5524-7284" target="_blank" rel="noopener">5272-5524-7284</a></td>
+            <td class="num">epiclabsgg</td><td class="num">Dec 2025</td>
+            <td class="num">235.2K</td><td class="num">133</td><td class="num">664</td><td class="num">3</td>
+            <td><span class="pill arch">Archived</span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td><td></td><td></td><td></td>
+            <td class="num">855.3M</td><td class="num">&mdash;</td><td class="num">1.30M</td><td class="num">482</td><td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="callout">
+      <h4>Islands don't ship once &mdash; they ship every week</h4>
+      <p>
+        Most of the value in this roster came after launch day. <span class="mono">PLAYSTATION VS XBOX</span> is on
+        <span class="mono">version 182</span> three years after release, with a whole ranked system added long
+        after it went live. <span class="mono">FORT LOCK</span> has shipped <span class="mono">178 versions</span>
+        since January 2025 &mdash; roughly two updates a week, every week. That cadence is the job.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="sect-title">What I do</h2>
+      <p class="sect-note">Concept to live-ops, on my own or inside a creator's team.</p>
+    </div>
+    <div class="caps">
+      <div class="cap">
+        <h4>End-to-end development</h4>
+        <p>Pitch, whitebox, systems, art pass, publish, then run it. I've taken islands from a one-line concept
+           to a live Discover listing and stayed on them through years of updates.</p>
+        <span class="proof">10 islands published &middot; 482 versions</span>
+      </div>
+      <div class="cap">
+        <h4>Verse scripting &amp; systems</h4>
+        <p>Persistent saves, rebirth and prestige loops, offline earnings, gacha hatching, ranked progression,
+           and in-island transactions &mdash; the systems that turn a map into something worth returning to.</p>
+        <span class="proof">4 islands with in-island transactions live</span>
+      </div>
+      <div class="cap">
+        <h4>Level design &amp; building</h4>
+        <p>Layouts that read at every scale I've shipped: 4-player first-person co-op sims through to 50-player
+           social lobbies where every slot is a different cosmetic loadout.</p>
+        <span class="proof">4 to 50 players &middot; first &amp; third person</span>
+      </div>
+      <div class="cap">
+        <h4>Game design &amp; balancing</h4>
+        <p>Economy curves, progression pacing and retention tuning. The measurable difference between an island
+           that spikes on release week and one that is still filling lobbies two years on.</p>
+        <span class="proof">40% D1 retention on Fort Lock &mdash; #43 platform-wide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="sect-title">Systems shipped</h2>
+      <p class="sect-note">Built and running in published islands, not prototypes.</p>
+    </div>
+    <ul class="chips">
+      <li>Persistent auto-save</li>
+      <li>Rebirth &amp; prestige loops</li>
+      <li>Offline earnings</li>
+      <li>Egg hatching &amp; collection index</li>
+      <li>Ranked progression</li>
+      <li>In-island transactions</li>
+      <li>Capture the flag</li>
+      <li>5v5 ball physics &amp; charge-shot</li>
+      <li>Live cosmetic swapping</li>
+      <li>64-theme rotation</li>
+      <li>Daily reward cycles</li>
+      <li>Dropper &amp; tycoon economies</li>
+      <li>NPC customer AI</li>
+      <li>Secret vaults</li>
+      <li>Pet, hat &amp; weapon unlocks</li>
+      <li>Dynamic price setting</li>
+    </ul>
+  </div>
+</section>
+
+<div class="contact">
+  <div class="wrap" style="padding-top:60px;padding-bottom:60px">
+    <div class="contact-grid">
+      <div>
+        <p class="eyebrow">Open for work</p>
+        <h2>Got an island that needs building &mdash; or one that needs saving?</h2>
+        <p>I take on full builds, systems work on existing islands, and ongoing live-ops. Send me the concept
+           or the code and I'll tell you honestly what I'd change.</p>
+      </div>
+      <ul class="links">
+        <li><span class="lk">Discord</span><span class="lv">Zeritress</span></li>
+        <li><span class="lk">Email</span><a class="lv lnk" href="mailto:zeritress@gmail.com">zeritress@gmail.com</a></li>
+        <li><span class="lk">Epic ID</span><span class="lv">Zeritress</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Playtime, favorites, concurrent-player and retention figures sourced from public island pages on
+      <a href="https://fortnite.gg" target="_blank" rel="noopener">Fortnite.GG</a>, captured 5 September 2026.
+      Live numbers change daily. Revenue figure is self-reported and covers combined creator payouts across
+      islands worked on.</p>
+    <p>Islands were built for and are published under their respective creator accounts &mdash; whoodsxp,
+      jeanfils, dansam and epiclabsgg. &ldquo;Archived&rdquo; marks islands currently disabled in Fortnite;
+      seasonal builds are taken down by design.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var CURVES = {
+    fortlock:[132,134,122,87,67,86,152,240,282,273,286,381,396,328,274,253,214,186,163,170,199,225,244,301,321],
+    fashion:[82,83,57,30,22,12,12,16,22,23,44,43,84,89,97,113,166,167,190,193,170,192,185,114,113],
+    psxbox:[122,136,125,126,109,83,88,93,106,105,121,132,148,158,155,164,160,160,140,140,112,122,114,104,101]
+  };
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function el(name, attrs){
+    var n = document.createElementNS(SVGNS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function pts(data, x0, x1, y0, y1, max){
+    var out = [], step = (x1 - x0) / (data.length - 1);
+    for (var i = 0; i < data.length; i++){
+      out.push([x0 + i * step, y1 - (data[i] / max) * (y1 - y0)]);
+    }
+    return out;
+  }
+  function linePath(p){
+    return p.map(function(q, i){ return (i ? "L" : "M") + q[0].toFixed(2) + " " + q[1].toFixed(2); }).join(" ");
+  }
+
+  /* ---- hero chart: axis, grid, area, line, peak label, crosshair ---- */
+  function drawHero(){
+    var svg = document.getElementById("heroChart");
+    if (!svg) return;
+    var data = CURVES.fortlock;
+    var W = 460, H = 190, L = 34, R = 8, T = 22, B = 26;
+    var x0 = L, x1 = W - R, y0 = T, y1 = H - B;
+    var max = 430;
+    var p = pts(data, x0, x1, y0, y1, max);
+
+    var ticks = [0, 100, 200, 300];
+    ticks.forEach(function(t){
+      var y = y1 - (t / max) * (y1 - y0);
+      svg.appendChild(el("line", {x1:x0, x2:x1, y1:y, y2:y, stroke:"var(--line)", "stroke-width":1}));
+      var lab = el("text", {x:x0 - 8, y:y + 3.5, "text-anchor":"end", fill:"var(--muted)",
+        "font-family":"IBM Plex Mono, monospace", "font-size":9, "letter-spacing":".04em"});
+      lab.textContent = t;
+      svg.appendChild(lab);
+    });
+
+    var area = linePath(p) + " L" + x1.toFixed(2) + " " + y1 + " L" + x0.toFixed(2) + " " + y1 + " Z";
+    svg.appendChild(el("path", {d:area, fill:"var(--data-fill)", stroke:"none"}));
+    svg.appendChild(el("path", {d:linePath(p), fill:"none", stroke:"var(--data)",
+      "stroke-width":2, "stroke-linejoin":"round", "stroke-linecap":"round"}));
+
+    /* peak, direct-labelled */
+    var pi = data.indexOf(Math.max.apply(null, data));
+    svg.appendChild(el("circle", {cx:p[pi][0], cy:p[pi][1], r:3.4, fill:"var(--data)",
+      stroke:"var(--surface-2)", "stroke-width":2}));
+    var pk = el("text", {x:p[pi][0], y:p[pi][1] - 9, "text-anchor":"middle", fill:"var(--ink)",
+      "font-family":"IBM Plex Mono, monospace", "font-size":10, "font-weight":600});
+    pk.textContent = "396 peak";
+    svg.appendChild(pk);
+
+    /* live endpoint */
+    var last = p[p.length - 1];
+    svg.appendChild(el("circle", {cx:last[0], cy:last[1], r:3, fill:"var(--data)"}));
+
+    [["24h ago", x0, "start"], ["now", x1, "end"]].forEach(function(a){
+      var t = el("text", {x:a[1], y:H - 8, "text-anchor":a[2], fill:"var(--muted)",
+        "font-family":"IBM Plex Mono, monospace", "font-size":9, "letter-spacing":".08em"});
+      t.textContent = a[0];
+      svg.appendChild(t);
+    });
+
+    /* hover */
+    var cross = el("line", {x1:0, x2:0, y1:y0, y2:y1, stroke:"var(--line-2)", "stroke-width":1, opacity:0});
+    var cdot = el("circle", {cx:0, cy:0, r:4, fill:"var(--data)", stroke:"var(--surface-2)", "stroke-width":2, opacity:0});
+    svg.appendChild(cross); svg.appendChild(cdot);
+    var hit = el("rect", {x:x0, y:y0, width:x1 - x0, height:y1 - y0, fill:"transparent"});
+    svg.appendChild(hit);
+
+    var tip = document.getElementById("heroTip");
+    var holder = document.getElementById("heroHolder");
+    function move(ev){
+      var r = svg.getBoundingClientRect();
+      var rel = ((ev.clientX - r.left) / r.width) * W;
+      var i = Math.round(((rel - x0) / (x1 - x0)) * (data.length - 1));
+      i = Math.max(0, Math.min(data.length - 1, i));
+      cross.setAttribute("x1", p[i][0]); cross.setAttribute("x2", p[i][0]);
+      cross.setAttribute("opacity", 1);
+      cdot.setAttribute("cx", p[i][0]); cdot.setAttribute("cy", p[i][1]);
+      cdot.setAttribute("opacity", 1);
+      var hrsAgo = data.length - 1 - i;
+      tip.textContent = data[i] + " players  ·  " + (hrsAgo === 0 ? "now" : hrsAgo + "h ago");
+      tip.style.left = (p[i][0] / W * 100) + "%";
+      tip.style.top  = (p[i][1] / H * holder.clientHeight) + "px";
+      tip.style.opacity = 1;
+    }
+    function leave(){
+      cross.setAttribute("opacity", 0); cdot.setAttribute("opacity", 0); tip.style.opacity = 0;
+    }
+    hit.addEventListener("mousemove", move);
+    hit.addEventListener("mouseleave", leave);
+  }
+
+  /* ---- sparklines ---- */
+  function drawSparks(){
+    Array.prototype.forEach.call(document.querySelectorAll(".spark"), function(svg){
+      var data = CURVES[svg.getAttribute("data-curve")];
+      if (!data) return;
+      var W = 250, H = 62, x0 = 3, x1 = W - 3, y0 = 14, y1 = H - 6;
+      var max = Math.max.apply(null, data) * 1.06;
+      var p = pts(data, x0, x1, y0, y1, max);
+
+      var area = linePath(p) + " L" + x1 + " " + y1 + " L" + x0 + " " + y1 + " Z";
+      svg.appendChild(el("path", {d:area, fill:"var(--data-fill)", stroke:"none"}));
+      svg.appendChild(el("path", {d:linePath(p), fill:"none", stroke:"var(--data)",
+        "stroke-width":1.8, "stroke-linejoin":"round", "stroke-linecap":"round"}));
+
+      var pi = data.indexOf(Math.max.apply(null, data));
+      svg.appendChild(el("circle", {cx:p[pi][0], cy:p[pi][1], r:2.8, fill:"var(--data)",
+        stroke:"var(--surface)", "stroke-width":1.6}));
+
+      var anchor = p[pi][0] > W * 0.72 ? "end" : (p[pi][0] < W * 0.14 ? "start" : "middle");
+      var lab = el("text", {x:p[pi][0], y:Math.max(9, p[pi][1] - 7), "text-anchor":anchor,
+        fill:"var(--ink-2)", "font-family":"IBM Plex Mono, monospace", "font-size":9.5, "font-weight":600});
+      lab.textContent = data[pi];
+      svg.appendChild(lab);
+
+      var last = p[p.length - 1];
+      svg.appendChild(el("circle", {cx:last[0], cy:last[1], r:2.2, fill:"var(--data)", opacity:.65}));
+    });
+  }
+
+  function init(){ drawHero(); drawSparks(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+</script>
+
+</body>
+</html>
