@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Zeritress: Unreal Engine 5 gameplay AI and NPC systems portfolio.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+<title>Zeritress – Unreal AI Developer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800;125,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: an editor "details panel". Each project pairs its footage with a spec column; C++ class names in mono act as captions.
+   Node colours borrow from Unreal's behavior tree editor: composites grey, decorators blue, services green, tasks purple. */
+:root{
+  --bg:#F1F2F4; --surface:#FFFFFF; --ink:#14171C; --muted:#535A66; --line:#D5D9E0;
+  --accent:#5B3CC4; --accent-ink:#FFFFFF;
+  --comp:#4B515C; --deco:#1C6FA8; --svc:#2E7D4F; --task:#5B3CC4;
+  --media-bg:#0E1014;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101216; --surface:#191C22; --ink:#E9EBEF; --muted:#A0A7B3; --line:#2B3039;
+    --accent:#A58CFF; --accent-ink:#14111F;
+    --comp:#B6BCC6; --deco:#62B4EA; --svc:#6FCF97; --task:#A58CFF;
+    --media-bg:#08090B;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101216; --surface:#191C22; --ink:#E9EBEF; --muted:#A0A7B3; --line:#2B3039;
+  --accent:#A58CFF; --accent-ink:#14111F;
+  --comp:#B6BCC6; --deco:#62B4EA; --svc:#6FCF97; --task:#A58CFF;
+  --media-bg:#08090B;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;margin:0}
+a{color:inherit}
+a:focus-visible,button:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+img,video{max-width:100%;display:block}
+code,.mono{font-family:var(--mono);font-size:.84em}
+h1,h2,h3{text-wrap:balance}
+
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Header */
+.top{padding-block:56px 48px;border-bottom:1px solid var(--line)}
+.top-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:start}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-family:var(--display);font-stretch:125%;font-weight:800;font-size:clamp(2.6rem,7vw,5rem);line-height:.92;letter-spacing:-.01em;margin:0 0 20px;text-transform:uppercase}
+h1 span{display:block;color:var(--accent)}
+.lede{font-size:1.15rem;max-width:40ch;margin:0 0 26px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;border:1.5px solid var(--ink);background:none;color:var(--ink);cursor:pointer;font-family:var(--body)}
+.btn-solid{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:hover{filter:brightness(1.08)}
+.email{font-family:var(--mono);font-size:.85rem;color:var(--muted);user-select:all}
+
+/* Blackboard-style brief match */
+.bb{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.bb-head{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.bb-head b{color:var(--ink);font-weight:600}
+.bb dl{margin:0}
+.bb-row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:14px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.bb-row:last-child{border-bottom:0}
+.bb dt{font-weight:700;font-size:.92rem;line-height:1.35}
+.bb dd{margin:0;font-size:.9rem;color:var(--muted);line-height:1.45}
+.bb dd a{color:var(--ink);font-weight:600;text-decoration-color:var(--line);text-underline-offset:3px}
+.bb dd a:hover{text-decoration-color:var(--accent)}
+
+/* Projects */
+.project{padding-block:72px;border-bottom:1px solid var(--line)}
+.p-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:22px}
+.p-index{font-family:var(--mono);font-size:.78rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+h2{font-family:var(--display);font-stretch:112%;font-weight:800;font-size:clamp(2rem,4.6vw,3.3rem);line-height:1;margin:0;text-transform:uppercase}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px;padding:0;list-style:none}
+.meta li{font-family:var(--mono);font-size:.75rem;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:var(--surface)}
+.p-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:40px;align-items:start}
+.p-text{min-width:0}
+.p-text p{margin:0 0 16px;max-width:60ch}
+.media{background:var(--media-bg);border-radius:10px;overflow:hidden;aspect-ratio:16/9;max-width:100%}
+.media video,.media img{width:100%;height:100%;object-fit:cover}
+.media.pixel img{image-rendering:pixelated}
+.cap{font-size:.85rem;color:var(--muted);margin:8px 2px 0}
+h3{font-family:var(--display);font-stretch:112%;font-weight:700;font-size:1.05rem;text-transform:uppercase;letter-spacing:.02em;margin:26px 0 8px}
+.p-text h3:first-child{margin-top:0}
+ul.list{margin:0;padding:0;list-style:none}
+ul.list li{padding:8px 0 8px 20px;border-top:1px solid var(--line);position:relative;font-size:.95rem;line-height:1.5}
+ul.list li::before{content:"";position:absolute;left:2px;top:16px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+ul.list code{color:var(--muted)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
+.gallery figure{margin:0}
+.gallery button{padding:0;border:0;background:var(--media-bg);cursor:zoom-in;border-radius:8px;overflow:hidden;display:block;width:100%;aspect-ratio:16/9}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.gallery.pixel img{image-rendering:pixelated}
+.gallery button:hover img{transform:scale(1.03)}
+.gallery figcaption{font-size:.82rem;color:var(--muted);padding:6px 2px 0}
+
+/* Behavior tree */
+.deep{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;margin-top:48px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;min-width:0}
+.panel h3{margin-top:0}
+.panel > p{font-size:.92rem;color:var(--muted);margin:0 0 14px}
+.bt{overflow-x:auto}
+.bt ul{list-style:none;margin:0;padding-left:20px;position:relative}
+.bt > ul{padding-left:0}
+.bt li{position:relative;padding:4px 0 4px 0}
+.bt ul ul li::before{content:"";position:absolute;left:-12px;top:0;bottom:0;border-left:1.5px solid var(--line)}
+.bt ul ul li:last-child::before{bottom:auto;height:18px}
+.bt ul ul li::after{content:"";position:absolute;left:-12px;top:18px;width:10px;border-top:1.5px solid var(--line)}
+.node{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.86rem;line-height:1.3;white-space:nowrap}
+.node b{font-weight:700}
+.tag{font-family:var(--mono);font-size:.7rem;padding:2px 7px;border-radius:5px;border:1.5px solid currentColor;font-weight:600}
+.t-comp{color:var(--comp)} .t-deco{color:var(--deco)} .t-svc{color:var(--svc)} .t-task{color:var(--task)}
+.note{color:var(--muted);font-size:.8rem;white-space:normal}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:.78rem;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:right}
+td strong{color:var(--svc)}
+.tablewrap{overflow-x:auto}
+
+/* UEFN + footer */
+.also{padding-block:64px;border-bottom:1px solid var(--line)}
+.also-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.also p{margin:0 0 14px;max-width:60ch}
+footer{padding-block:72px 64px}
+footer h2{max-width:16ch;margin-bottom:18px}
+footer p{max-width:56ch;margin:0 0 22px}
+.edu{color:var(--muted);font-size:.9rem;margin-top:30px}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;background:rgba(8,9,12,.92);display:flex;align-items:center;justify-content:center;z-index:10;padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb[hidden]{display:none}
+.lb img{max-height:100%;border-radius:8px;image-rendering:auto}
+.lb.pixel img{image-rendering:pixelated}
+.lb button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));background:#FFFFFF;color:#14171C;border:0;border-radius:8px;padding:8px 14px;font-weight:700;font-family:var(--body);font-size:.95rem;cursor:pointer}
+
+@media (max-width:880px){
+  .top-grid,.p-grid,.deep,.also-grid{grid-template-columns:minmax(0,1fr);gap:28px}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .project{padding-block:56px}
+}
+@media (max-width:460px){
+  .bb-row{grid-template-columns:minmax(0,1fr);gap:4px}
+}
+@media (prefers-reduced-motion:reduce){ .gallery img{transition:none} }
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap top-grid">
+    <div>
+      <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
+      <h1>Gameplay AI<span>&amp; NPC systems</span></h1>
+      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a networked RPG with hand-built enemy AI, crowd NPC work from a studio project, and my final-year action game.</p>
+      <div class="actions">
+        <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
+        <span class="email">zeritress@gmail.com</span>
+      </div>
+    </div>
+    <aside class="bb" aria-label="How my work maps to an AI NPC brief">
+      <div class="bb-head"><b>BB_Brief</b><span>key → where to see it</span></div>
+      <dl>
+        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 18,600 lines of C++.</dd></div>
+        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#ashford">Ashford Hollow</a>: three trees, five custom C++ nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
+        <div class="bb-row"><dt>NavMesh &amp; NPC navigation</dt><dd>Detour crowd avoidance, EQS-picked positions, a pack that flanks without colliding.</dd></div>
+        <div class="bb-row"><dt>Interactive NPCs</dt><dd>A quest giver with dialog and per-player markers; crowds that react to player powers.</dd></div>
+        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
+      </dl>
+    </aside>
+  </div>
+</header>
+
+<main>
+  <!-- 1. Ashford Hollow -->
+  <section class="project" id="ashford">
+    <div class="wrap">
+      <div class="p-head">
+        <div>
+          <p class="p-index">Solo project · 2026</p>
+          <h2>Ashford Hollow</h2>
+        </div>
+        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li></ul>
+      </div>
+      <div class="p-grid">
+        <div>
+          <div class="media pixel"><img src="media/ah_boss.jpg" alt="Top-down pixel-art knight standing in a boss slam telegraph circle at the ruined watchtower, with the Watchtower Guardian health bar at the top" loading="eager"></div>
+          <p class="cap">The Watchtower Guardian's slam telegraph. Its fill is synced to server time, so every client sees the same warning.</p>
+        </div>
+        <div class="p-text">
+          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, and art came from a CC0 pack.</p>
+          <h3>Enemy AI</h3>
+          <ul class="list">
+            <li>One <code>AAHEnemyAIController</code> with AI Perception (sight) and a behavior tree per enemy type, all sharing one Blackboard</li>
+            <li>Wolf pack: flank slots and per-target attack tokens, so only one wolf bites at a time</li>
+            <li>Bandit archer: an EQS query picks a firing spot that is in range, in sight and reachable; kiting falls out of that</li>
+            <li>Mini-boss: telegraphed slam and lane dash, with an observer abort that cuts the chase the moment an attack fits</li>
+            <li>NavMesh pathing with Detour crowd avoidance, so packs flow around each other</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="deep">
+        <div class="panel">
+          <h3>BT_Wolf, as built</h3>
+          <p>The trees and EQS queries are generated by a C++ commandlet as real editor graphs, so they open and edit like hand-made ones. This is the wolf's.</p>
+          <div class="bt" role="tree" aria-label="Wolf behavior tree">
+            <ul>
+              <li><span class="node"><span class="tag t-comp">Selector</span><b>Wolf</b><span class="tag t-svc">Track Target</span></span>
+                <ul>
+                  <li><span class="node"><span class="tag t-comp">Sequence</span><b>Hunt</b><span class="note">needs a target</span></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-comp">Selector</span><b>Bite or Circle</b></span>
+                        <ul>
+                          <li><span class="node"><span class="tag t-comp">Sequence</span><b>Bite</b><span class="tag t-deco">Cooldown 1.4 s</span><span class="tag t-deco">Attack Token ×1</span></span>
+                            <ul>
+                              <li><span class="node"><span class="tag t-task">Move To</span>Lunge<span class="tag t-deco">Time Limit 1.5 s</span></span></li>
+                              <li><span class="node"><span class="tag t-task">Use Ability</span>Melee combo (GAS)</span></li>
+                              <li><span class="node"><span class="tag t-task">Wait</span>Back off 0.4 s</span></li>
+                            </ul>
+                          </li>
+                          <li><span class="node"><span class="tag t-task">Circle Target</span>Hold a flank slot</span></li>
+                          <li><span class="node"><span class="tag t-task">Wait</span>Fallback 0.2 s</span></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><span class="node"><span class="tag t-comp">Sequence</span><b>Return Home</b></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-task">Move To</span>Home location</span></li>
+                      <li><span class="node"><span class="tag t-task">Wait</span>Idle 1 s</span></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="legend"><span class="tag t-comp">Composite</span><span class="tag t-deco">Decorator</span><span class="tag t-svc">Service</span><span class="tag t-task">Task</span></div>
+        </div>
+        <div class="p-text">
+          <h3>Custom behavior tree nodes</h3>
+          <ul class="list">
+            <li><code>BTService_AHTrackTarget</code>: writes perception results to the Blackboard (target, distance, line of sight)</li>
+            <li><code>BTTask_AHUseAbility</code>: lets the tree fire Gameplay Abilities</li>
+            <li><code>BTTask_AHCircleTarget</code>, <code>BTDecorator_AHAttackToken</code>, <code>BTDecorator_AHTargetInRange</code> with observer aborts</li>
+          </ul>
+          <h3>NPCs and quests</h3>
+          <ul class="list">
+            <li>Quest giver NPC with an interaction prompt, typewriter dialog and per-player quest markers</li>
+            <li>Data-driven quests, a quest log per player and shared kill credit for the party</li>
+          </ul>
+          <h3>Lag compensation, measured</h3>
+          <p style="font-size:.92rem;color:var(--muted)">The server rewinds melee targets by the attacker's round trip. A scripted client swung at three circling wolves for 25 s; a ghost hit is a spark the client showed that the server then rejected.</p>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Round trip</th><th>Rewind</th><th class="num">Hits shown</th><th class="num">Ghost hits</th></tr></thead>
+              <tbody>
+                <tr><td>200 ms</td><td>off</td><td class="num">61</td><td class="num">7 (11%)</td></tr>
+                <tr><td>200 ms</td><td>on</td><td class="num">58</td><td class="num"><strong>0</strong></td></tr>
+                <tr><td>300 ms</td><td>off</td><td class="num">60</td><td class="num">18 (30%)</td></tr>
+                <tr><td>300 ms</td><td>on</td><td class="num">58</td><td class="num"><strong>1 (2%)</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery pixel" data-gallery>
+        <figure><button type="button" data-full="media/ah_atmosphere.jpg" aria-label="Enlarge: day, rain, dusk and night"><img src="media/ah_atmosphere.jpg" alt="The same village shown at day, in rain, at dusk and at night" loading="lazy"></button><figcaption>Day, rain, dusk and night. The server replicates the rule, not the value: 0 B/s extra.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_ruins.jpg" aria-label="Enlarge: the ruined watchtower"><img src="media/ah_ruins.jpg" alt="The knight walking through the ruined watchtower area" loading="lazy"></button><figcaption>The ruined watchtower, where the mini-boss waits.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_village.jpg" aria-label="Enlarge: forest path and village"><img src="media/ah_village.jpg" alt="Forest path and cottages with chimney smoke" loading="lazy"></button><figcaption>Village and forest path, built from code by an editor commandlet.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Moshpit -->
+  <section class="project" id="moshpit">
+    <div class="wrap">
+      <div class="p-head">
+        <div>
+          <p class="p-index">Studio work · Moshpit Studios</p>
+          <h2>Moshpit virtual concert</h2>
+        </div>
+        <ul class="meta"><li>UE5</li><li>AI programmer</li><li>Technical animator</li></ul>
+      </div>
+      <div class="p-grid">
+        <div>
+          <div class="media"><video data-autoplay src="media/mosh_reel.mp4" poster="media/mosh_poster.jpg" muted loop playsinline preload="none" controls aria-label="Moshpit gameplay reel"></video></div>
+          <p class="cap">Party rooms, the stadium crowd, Force Shot and Super Jump, and the in-game browser sending a video to the stage screens.</p>
+        </div>
+        <div class="p-text">
+          <p>A multiplayer virtual concert. Players create or join a party room, then move through a stadium crowd of NPCs while video plays on the stage screens.</p>
+          <h3>My part</h3>
+          <ul class="list">
+            <li>NPC behavior with AI Controllers and behavior trees</li>
+            <li>Technical animation for the crowd and player characters</li>
+            <li>Testing the NPCs against the player powers</li>
+          </ul>
+          <h3>In the build</h3>
+          <ul class="list">
+            <li>A dancing crowd that fills the floor and the stands</li>
+            <li>Player powers on cooldowns: Dash, Super Jump, Super Sprint and Force Shot, which knocks crowd NPCs into ragdoll</li>
+            <li>Party rooms you create, name and join</li>
+            <li>An in-game browser that puts a chosen video on the stage screens</li>
+          </ul>
+        </div>
+      </div>
+      <div class="gallery" data-gallery>
+        <figure><button type="button" data-full="media/mosh_party.jpg" aria-label="Enlarge: party room screen"><img src="media/mosh_party.jpg" alt="Create Party screen with a party room name field" loading="lazy"></button><figcaption>Creating a party room.</figcaption></figure>
+        <figure><button type="button" data-full="media/mosh_poster.jpg" aria-label="Enlarge: crowd"><img src="media/mosh_poster.jpg" alt="Player standing in a dense crowd of dancing NPCs" loading="lazy"></button><figcaption>Inside the crowd.</figcaption></figure>
+        <figure><button type="button" data-full="media/mosh_browser.jpg" aria-label="Enlarge: video browser"><img src="media/mosh_browser.jpg" alt="Dialog saying the selected video will start on the stage screen shortly" loading="lazy"></button><figcaption>Sending a video to the stage.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FYP -->
+  <section class="project" id="fyp">
+    <div class="wrap">
+      <div class="p-head">
+        <div>
+          <p class="p-index">Final year project</p>
+          <h2>Third-person action RPG</h2>
+        </div>
+        <ul class="meta"><li>UE5</li><li>Combat &amp; abilities</li><li>Enemy AI</li><li>Progression</li></ul>
+      </div>
+      <div class="p-grid">
+        <div>
+          <div class="media"><video data-autoplay src="media/fyp_reel.mp4" poster="media/fyp_poster.jpg" muted loop playsinline preload="none" controls aria-label="Final year project gameplay reel"></video></div>
+          <p class="cap">Bamboo shrine and neon city levels: combat, elemental abilities and the skill tree.</p>
+        </div>
+        <div class="p-text">
+          <p>A third-person action game across two levels, a bamboo shrine and a neon city. Melee combat with elemental abilities, enemies that hunt the player, and progression through XP and a skill tree.</p>
+          <ul class="list">
+            <li>Melee combat with ice, fire and energy-slash abilities, each with its own screen effect</li>
+            <li>Enemy AI that tracks the player and attacks in groups</li>
+            <li>XP, levelling and skill points, with level-up notifications</li>
+            <li>A skill tree in three branches (Combat, Mobility, Attribute) with locked tiers and unlockable moves such as Roll and Special Attack</li>
+          </ul>
+        </div>
+      </div>
+      <div class="gallery" data-gallery>
+        <figure><button type="button" data-full="media/fyp_skills.jpg" aria-label="Enlarge: skill tree"><img src="media/fyp_skills.jpg" alt="Skill tree with Combat, Mobility and Attribute branches over gameplay" loading="lazy"></button><figcaption>The skill tree: three branches, locked tiers.</figcaption></figure>
+        <figure><button type="button" data-full="media/fyp_poster.jpg" aria-label="Enlarge: combat"><img src="media/fyp_poster.jpg" alt="Player character striking an enemy with a golden slash" loading="lazy"></button><figcaption>Energy slash in the bamboo shrine.</figcaption></figure>
+        <figure><button type="button" data-full="media/fyp_neon.jpg" aria-label="Enlarge: fire form"><img src="media/fyp_neon.jpg" alt="Player character in a burning fire form in a neon-lit street" loading="lazy"></button><figcaption>Fire form in the neon city.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- UEFN -->
+  <section class="also" id="uefn">
+    <div class="wrap also-grid">
+      <div>
+        <p class="p-index">Also · Zeritress</p>
+        <h2>Twelve Fortnite islands in UEFN</h2>
+      </div>
+      <div>
+        <p>As Zeritress I have shipped twelve islands with six creator partners since 2023, with 855 million minutes played and an all-time peak of 44,962 concurrent players. The flagship, PlayStation vs Xbox, alone has 552 million minutes.</p>
+        <ul class="list" style="margin-bottom:18px">
+          <li>Verse systems: persistent economies and save state, shops and item granting, per-player state tested at 50 players</li>
+          <li>Progression, prestige and ranked layers, plus NPC customer AI in tycoon islands</li>
+          <li>Live-ops with about two updates a week on flagship islands</li>
+        </ul>
+        <p>Epic plans to merge UEFN and Unreal Engine 5 into Unreal Engine 6, with Verse at its core, so this work carries forward.</p>
+        <a class="btn" href="https://hassam28.github.io" target="_blank" rel="noopener">See the full UEFN portfolio</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Need an NPC that thinks?</h2>
+    <p>I'm available for short proof-of-concept builds and longer gameplay AI work in Unreal Engine 5.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
+      <button class="btn" type="button" id="copyEmail">Copy email</button>
+      <span class="email">zeritress@gmail.com</span>
+    </div>
+    <p class="edu">Zeritress · Unreal Engine 5 developer</p>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button type="button" id="lbClose">Close</button>
+  <img id="lbImg" alt="">
+</div>
+
+<script>
+(function(){
+  // Play reels only while on screen; respect reduced motion.
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vids = document.querySelectorAll('video[data-autoplay]');
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var v = e.target;
+        if (e.isIntersecting) { if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+        else if (!v.paused) v.pause();
+      });
+    }, {threshold: 0.4});
+    vids.forEach(function(v){ io.observe(v); });
+  }
+
+  // Lightbox
+  var lb = document.getElementById('lb'), img = document.getElementById('lbImg'), last = null;
+  function close(){ lb.hidden = true; img.removeAttribute('src'); if (last) last.focus(); }
+  document.querySelectorAll('[data-gallery] button').forEach(function(b){
+    b.addEventListener('click', function(){
+      last = b;
+      var inner = b.querySelector('img');
+      img.src = b.getAttribute('data-full'); img.alt = inner ? inner.alt : '';
+      lb.classList.toggle('pixel', !!b.closest('.pixel'));
+      lb.hidden = false; document.getElementById('lbClose').focus();
+    });
+  });
+  document.getElementById('lbClose').addEventListener('click', close);
+  lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !lb.hidden) close(); });
+
+  // Copy email
+  var cb = document.getElementById('copyEmail');
+  cb.addEventListener('click', function(){
+    var addr = 'zeritress@gmail.com';
+    function done(){ cb.textContent = 'Copied'; setTimeout(function(){ cb.textContent = 'Copy email'; }, 1800); }
+    function fallback(){ var s = document.querySelector('footer .email'); var r = document.createRange(); r.selectNodeContents(s); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); cb.textContent = 'Selected'; }
+    try { navigator.clipboard.writeText(addr).then(done, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
