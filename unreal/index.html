@@ -86,6 +86,7 @@ h2{font-family:var(--display);font-stretch:112%;font-weight:800;font-size:clamp(
 .media{background:var(--media-bg);border-radius:10px;overflow:hidden;aspect-ratio:16/9;max-width:100%}
 .media video,.media img{width:100%;height:100%;object-fit:cover}
 .media.pixel img{image-rendering:pixelated}
+.media button{padding:0;border:0;background:none;cursor:zoom-in;display:block;width:100%;height:100%}
 .cap{font-size:.85rem;color:var(--muted);margin:8px 2px 0}
 h3{font-family:var(--display);font-stretch:112%;font-weight:700;font-size:1.05rem;text-transform:uppercase;letter-spacing:.02em;margin:26px 0 8px}
 .p-text h3:first-child{margin-top:0}
@@ -161,7 +162,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     <div>
       <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
       <h1>Gameplay AI<span>&amp; NPC systems</span></h1>
-      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a networked RPG with hand-built enemy AI, crowd NPC work from a studio project, and my final-year action game.</p>
+      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, crowd NPC work from a studio project, and my final-year action game.</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
         <span class="email">zeritress@gmail.com</span>
@@ -171,9 +172,10 @@ footer p{max-width:56ch;margin:0 0 22px}
       <div class="bb-head"><b>BB_Brief</b><span>key → where to see it</span></div>
       <dl>
         <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 18,600 lines of C++.</dd></div>
-        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#ashford">Ashford Hollow</a>: three trees, five custom C++ nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
-        <div class="bb-row"><dt>NavMesh &amp; NPC navigation</dt><dd>Detour crowd avoidance, EQS-picked positions, a pack that flanks without colliding.</dd></div>
-        <div class="bb-row"><dt>Interactive NPCs</dt><dd>A quest giver with dialog and per-player markers; crowds that react to player powers.</dd></div>
+        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#field">Field Correspondent</a>: a tree per mode, six custom C++ nodes. <a href="#ashford">Ashford Hollow</a>: three trees, five custom nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
+        <div class="bb-row"><dt>NavMesh &amp; NPC navigation</dt><dd>A guide that waits for you, Detour crowd avoidance, EQS-picked positions, a pack that flanks without colliding.</dd></div>
+        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; a quest giver with dialog and per-player markers; crowds that react to player powers.</dd></div>
+        <div class="bb-row"><dt>Language models in the loop</dt><dd><a href="#field">Field Correspondent</a>: tool calls checked in C++, answers that cite their sources, memories from AI Perception.</dd></div>
         <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
       </dl>
     </aside>
@@ -181,7 +183,114 @@ footer p{max-width:56ch;margin:0 0 22px}
 </header>
 
 <main>
-  <!-- 1. Ashford Hollow -->
+  <!-- 1. Field Correspondent -->
+  <section class="project" id="field">
+    <div class="wrap">
+      <div class="p-head">
+        <div>
+          <p class="p-index">Solo proof of concept · 2026</p>
+          <h2>Field Correspondent</h2>
+        </div>
+        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>LLM tool calls</li><li>Retrieval with citations</li><li>AI Perception</li></ul>
+      </div>
+      <div class="p-grid">
+        <div>
+          <div class="media" data-gallery><button type="button" data-full="media/fc_memory.jpg" aria-label="Enlarge: answered from memory, cited"><img src="media/fc_memory.jpg" alt="The Correspondent in the server room. The chat shows 'What was that?' answered with a memory of a knock at the lobby's side door, cited as K3, and the debug panel lists the retrieval scores with the memory pinned" loading="eager"></button></div>
+          <p class="cap">"What was that?" answered from its own memory, cited. The F3 panel shows the hybrid search (BM25, vectors, rank fusion) and the memory pinned into the prompt.</p>
+        </div>
+        <div class="p-text">
+          <p>A reporter NPC in a newspaper building that you can talk to. It talks through a language model, streamed over HTTP. It knows the building from a handbook it searches and cites. It acts by proposing an action that C++ checks before a behavior tree carries it out. And it notices what happens around it, remembers it and files dispatches that cite what it saw. It runs offline with a scripted model, or with Claude or any OpenAI-compatible server, chosen in Project Settings.</p>
+          <h3>The model asks, C++ decides</h3>
+          <ul class="list">
+            <li>Five tools: <code>guide_to</code>, <code>follow_player</code>, <code>wait_here</code>, <code>investigate</code>, <code>file_dispatch</code>. The model never moves the pawn</li>
+            <li><code>FCIntents::Route</code> checks every call against a whitelist and the NavMesh (a complete path, not just a point on it) and refuses with a reason the model reads back: "There is no walkable way to Weather mast from here"</li>
+            <li>A new message aborts the running branch: "Actually, wait here" stops a guide mid-walk in about 0.2 s</li>
+            <li>Async HTTP with timeouts and streamed replies in both the Anthropic and OpenAI formats; no Tick on the NPC</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="deep">
+        <div class="panel">
+          <h3>BT_Correspondent, as built</h3>
+          <p>Generated by a C++ commandlet as a real editor graph. One branch per mode, each gated by a custom <code>Mode Is</code> decorator that aborts both ways, so a new intent takes over at once. Six of the nodes are custom C++.</p>
+          <div class="bt" role="tree" aria-label="Correspondent behavior tree">
+            <ul>
+              <li><span class="node"><span class="tag t-comp">Selector</span><b>Correspondent</b><span class="tag t-svc">Update Context</span></span>
+                <ul>
+                  <li><span class="node"><span class="tag t-comp">Sequence</span><b>Investigate</b><span class="tag t-deco">Mode Is Investigate</span></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-task">Move To</span>Walk to incident</span></li>
+                      <li><span class="node"><span class="tag t-task">Face Target</span>Look at it</span></li>
+                      <li><span class="node"><span class="tag t-task">Wait</span>Take it in 2 s</span></li>
+                      <li><span class="node"><span class="tag t-task">Record Observation</span>Remember, say it</span></li>
+                    </ul>
+                  </li>
+                  <li><span class="node"><span class="tag t-comp">Sequence</span><b>Guide</b><span class="tag t-deco">Mode Is Guide</span></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-task">Guide To POI</span>Lead, wait for the visitor</span></li>
+                      <li><span class="node"><span class="tag t-task">Face Target</span>Turn to visitor</span></li>
+                      <li><span class="node"><span class="tag t-task">Announce</span>Arrival</span></li>
+                    </ul>
+                  </li>
+                  <li><span class="node"><span class="tag t-comp">Sequence</span><b>Follow</b><span class="tag t-deco">Mode Is Follow</span></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-task">Move To</span>Keep up</span></li>
+                      <li><span class="node"><span class="tag t-task">Wait</span>Beat 0.3 s</span></li>
+                    </ul>
+                  </li>
+                  <li><span class="node"><span class="tag t-comp">Selector</span><b>Idle</b><span class="tag t-deco">Mode Is Idle</span></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-comp">Sequence</span><b>Talk</b><span class="tag t-deco">While speaking</span></span>
+                        <ul>
+                          <li><span class="node"><span class="tag t-task">Face Target</span>Face visitor</span></li>
+                          <li><span class="node"><span class="tag t-task">Wait</span>Listen 0.5 s</span></li>
+                        </ul>
+                      </li>
+                      <li><span class="node"><span class="tag t-task">Wait</span>Stand 1 s</span></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="legend"><span class="tag t-comp">Composite</span><span class="tag t-deco">Decorator</span><span class="tag t-svc">Service</span><span class="tag t-task">Task</span></div>
+        </div>
+        <div class="p-text">
+          <h3>Witness and report</h3>
+          <ul class="list">
+            <li>World events (a delivery, a power cut) are heard through walls and seen once they happen. AI Perception turns them into timed, first-person memories</li>
+            <li>Memories are retrieved like handbook pages, and the newest are pinned, because "what was that?" shares no words with "I heard a knock"</li>
+            <li><code>file_dispatch</code> is refused unless it cites a memory; the desk numbers it, saves it and posts it to a board in the level</li>
+          </ul>
+          <h3>Measured</h3>
+          <p style="font-size:.92rem;color:var(--muted)">Headless on a Ryzen 7 7700. Model latency isn't here: with no API key or local model available, model calls ran against the offline script and a local test server.</p>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>What</th><th class="num">Result</th></tr></thead>
+              <tbody>
+                <tr><td>Hybrid search over 57 chunks, median</td><td class="num">0.044 ms</td></tr>
+                <tr><td>Router check, unknown place</td><td class="num">3.0 µs</td></tr>
+                <tr><td>NavMesh reachability check</td><td class="num">5–13 µs</td></tr>
+                <tr><td>HTTP and streaming client, per call</td><td class="num">about 1 ms</td></tr>
+                <tr><td>Automation tests</td><td class="num"><strong>120 pass</strong></td></tr>
+                <tr><td>End-to-end check, packaged build</td><td class="num"><strong>50 checks pass</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery" data-gallery>
+        <figure><button type="button" data-full="media/fc_waiting.jpg" aria-label="Enlarge: a refusal, then waiting for the visitor"><img src="media/fc_waiting.jpg" alt="Chat showing a refused guide_to the weather mast and the explanation, then 'This way, please. I'll wait for you.' The debug panel shows Guide to server_room, waiting for the visitor, node Lead The Way" loading="lazy"></button><figcaption>The weather mast is fenced off, so the router refuses and the reply says why. Guiding elsewhere, it waits for the visitor.</figcaption></figure>
+        <figure><button type="button" data-full="media/fc_dispatch.jpg" aria-label="Enlarge: a filed dispatch"><img src="media/fc_dispatch.jpg" alt="A newsprint dispatch card about a delivery at the lobby's side door, with its sources: two memories and a handbook section" loading="lazy"></button><figcaption>A dispatch from two memories and a handbook section, with every source listed.</figcaption></figure>
+        <figure><button type="button" data-full="media/fc_board.jpg" aria-label="Enlarge: the dispatch board"><img src="media/fc_board.jpg" alt="The dispatch board on the newsroom wall listing dispatch 1 at 09:01" loading="lazy"></button><figcaption>The same dispatch on the newsroom's board, in the level.</figcaption></figure>
+      </div>
+      <p class="cap">Built with Unreal Editor 5.8, Visual Studio 2022 and Claude Code. A greybox level and stock mannequins: the work is in the systems.</p>
+    </div>
+  </section>
+
+  <!-- 2. Ashford Hollow -->
   <section class="project" id="ashford">
     <div class="wrap">
       <div class="p-head">
@@ -282,7 +391,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     </div>
   </section>
 
-  <!-- 2. Moshpit -->
+  <!-- 3. Moshpit -->
   <section class="project" id="moshpit">
     <div class="wrap">
       <div class="p-head">
@@ -322,7 +431,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     </div>
   </section>
 
-  <!-- 3. FYP -->
+  <!-- 4. FYP -->
   <section class="project" id="fyp">
     <div class="wrap">
       <div class="p-head">
