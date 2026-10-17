@@ -162,7 +162,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     <div>
       <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
       <h1>Gameplay AI<span>&amp; NPC systems</span></h1>
-      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, crowd NPC work from a studio project, and my final-year action game.</p>
+      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI and a two-phase boss, crowd NPC work from a studio project, and my final-year action game.</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
         <span class="email">zeritress@gmail.com</span>
@@ -171,12 +171,13 @@ footer p{max-width:56ch;margin:0 0 22px}
     <aside class="bb" aria-label="How my work maps to an AI NPC brief">
       <div class="bb-head"><b>BB_Brief</b><span>key → where to see it</span></div>
       <dl>
-        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 18,600 lines of C++.</dd></div>
-        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#field">Field Correspondent</a>: a tree per mode, six custom C++ nodes. <a href="#ashford">Ashford Hollow</a>: three trees, five custom nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
+        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 29,000 lines of C++.</dd></div>
+        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#field">Field Correspondent</a>: a tree per mode, six custom C++ nodes. <a href="#ashford">Ashford Hollow</a>: four trees (one runs a two-phase boss), five custom nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
         <div class="bb-row"><dt>NavMesh &amp; NPC navigation</dt><dd>A guide that waits for you, Detour crowd avoidance, EQS-picked positions, a pack that flanks without colliding.</dd></div>
-        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; a quest giver with dialog and per-player markers; crowds that react to player powers.</dd></div>
+        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; three quest givers with dialog and per-player markers; enemies that lie in ambush and rise as a pack; crowds that react to player powers.</dd></div>
         <div class="bb-row"><dt>Language models in the loop</dt><dd><a href="#field">Field Correspondent</a>: tool calls checked in C++, answers that cite their sources, memories from AI Perception.</dd></div>
-        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
+        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, abilities, statuses, boss phases, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
+        <div class="bb-row"><dt>Networked NPCs</dt><dd><a href="#ashford">Ashford Hollow</a>: AI runs on the server, clients predict only what feels instant, and every fix is measured (server corrections in a fight 534 to 121).</dd></div>
       </dl>
     </aside>
   </div>
@@ -298,22 +299,25 @@ footer p{max-width:56ch;margin:0 0 22px}
           <p class="p-index">Solo project · 2026</p>
           <h2>Ashford Hollow</h2>
         </div>
-        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li></ul>
+        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li><li>5 streamed zones</li></ul>
       </div>
       <div class="p-grid">
         <div>
-          <div class="media pixel"><img src="media/ah_boss.jpg" alt="Top-down pixel-art knight standing in a boss slam telegraph circle at the ruined watchtower, with the Watchtower Guardian health bar at the top" loading="eager"></div>
-          <p class="cap">The Watchtower Guardian's slam telegraph. Its fill is synced to server time, so every client sees the same warning.</p>
+          <div class="media pixel" data-gallery><button type="button" data-full="media/ah_abbot.jpg" aria-label="Enlarge: the Hollow Abbot ablaze"><img src="media/ah_abbot.jpg" alt="Two players in a torchlit crypt chamber with a burning spirit boss; a fire telegraph circle fills under one player, skeletons stand around the room, and the boss bar reads The Hollow Abbot - Ablaze" loading="eager"></button></div>
+          <p class="cap">The Hollow Abbot's second phase: Pyre Rain fills a circle under each player while the dead around the chamber rise. The phase is one replicated byte; every client derives the new form from it. A replay frame.</p>
         </div>
         <div class="p-text">
-          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, and art came from a CC0 pack.</p>
+          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server, across five streamed zones: a village, a forest with a hidden glade, a ruined watchtower, Blackmere Marsh and the Old Abbey Crypt. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, every map and behavior tree is generated by editor commandlets, and art came from a CC0 pack.</p>
           <h3>Enemy AI</h3>
           <ul class="list">
             <li>One <code>AAHEnemyAIController</code> with AI Perception (sight) and a behavior tree per enemy type, all sharing one Blackboard</li>
             <li>Wolf pack: flank slots and per-target attack tokens, so only one wolf bites at a time</li>
             <li>Bandit archer: an EQS query picks a firing spot that is in range, in sight and reachable; kiting falls out of that</li>
             <li>Mini-boss: telegraphed slam and lane dash, with an observer abort that cuts the chase the moment an attack fits</li>
-            <li>NavMesh pathing with Detour crowd avoidance, so packs flow around each other</li>
+            <li>Two-phase boss: phases are data (health threshold, look, moveset, granted abilities). At half health the Hollow Abbot ignites, wakes the dead and gains Pyre Rain. One tree serves both phases: the new attack simply fails until it's granted</li>
+            <li>Ambushers: kappas wait under the bog water and skeletons lie as bones, then surface as a pack when you come close</li>
+            <li>Statuses the AI respects: any stun-type status (a stun, a kappa submerged, a boss transforming) holds the brain still, with no AI code per status</li>
+            <li>NavMesh pathing with Detour crowd avoidance, so packs flow around each other; burning ground is a NavMesh obstacle they path around</li>
           </ul>
         </div>
       </div>
@@ -364,8 +368,8 @@ footer p{max-width:56ch;margin:0 0 22px}
           </ul>
           <h3>NPCs and quests</h3>
           <ul class="list">
-            <li>Quest giver NPC with an interaction prompt, typewriter dialog and per-player quest markers</li>
-            <li>Data-driven quests, a quest log per player and shared kill credit for the party</li>
+            <li>Three quest givers with an interaction prompt, typewriter dialog and per-player quest markers</li>
+            <li>Data-driven quests, a quest log per player and shared credit for the party; objectives count kills and world events (vents sealed, braziers lit)</li>
           </ul>
           <h3>Lag compensation, measured</h3>
           <p style="font-size:.92rem;color:var(--muted)">The server rewinds melee targets by the attacker's round trip. A scripted client swung at three circling wolves for 25 s; a ghost hit is a spark the client showed that the server then rejected.</p>
@@ -380,14 +384,31 @@ footer p{max-width:56ch;margin:0 0 22px}
               </tbody>
             </table>
           </div>
+          <h3>Prediction, measured</h3>
+          <p style="font-size:.92rem;color:var(--muted)">Server corrections of a player's predicted movement, 100 ms each way, scripted runs.</p>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Change</th><th class="num">Before</th><th class="num">After</th></tr></thead>
+              <tbody>
+                <tr><td>Soft collision: players walk through enemies, the server moves enemies aside (25 s wolf fight)</td><td class="num">534</td><td class="num"><strong>121</strong></td></tr>
+                <tr><td>Bog water slows you, predicted from where you stand</td><td class="num">184</td><td class="num"><strong>0</strong></td></tr>
+                <tr><td>Rallied walking speed, a per-move flag the server checks</td><td class="num">49</td><td class="num"><strong>0</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:.92rem;color:var(--muted)">What's left in the fight is knockback, which a client can't predict. A dedicated server with every zone loaded spends about 1.5 ms a tick; a two-player boss fight costs 4.5 to 7.8 KB/s per client.</p>
         </div>
       </div>
 
       <div class="gallery pixel" data-gallery>
+        <figure><button type="button" data-full="media/ah_marsh.jpg" aria-label="Enlarge: a kappa bursting out of the bog"><img src="media/ah_marsh.jpg" alt="A marsh pool ringed with reeds and lily pads; a kappa bursts out of the water in a splash beside one player while another stands on the bank" loading="lazy"></button><figcaption>Blackmere Marsh: a kappa bursts out of the bog as a player wades close. A replay frame, so it's all replicated state.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_crypt.jpg" aria-label="Enlarge: the Old Abbey Crypt"><img src="media/ah_crypt.jpg" alt="A torchlit crypt hall with the zone title Old Abbey Crypt, a ladder up, Brother Aldric with a quest marker, and an ossuary of bones to the left" loading="lazy"></button><figcaption>The Old Abbey Crypt: rooms carved by the generator, a ghost with a quest, bones that will stand up.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_boss.jpg" aria-label="Enlarge: the guardian's slam telegraph"><img src="media/ah_boss.jpg" alt="Top-down pixel-art knight standing in a boss slam telegraph circle at the ruined watchtower, with the Watchtower Guardian health bar at the top" loading="lazy"></button><figcaption>The Watchtower Guardian's slam. The warning's fill is synced to server time, half a round trip early on each client.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_status.jpg" aria-label="Enlarge: statuses on the guardian"><img src="media/ah_status.jpg" alt="The Watchtower Guardian stunned and burning; status icons under its health bar and beside the player's frame" loading="lazy"></button><figcaption>Statuses as data: the guardian stunned and burning, the player slowed. Icons are drawn from replicated tags.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_map.jpg" aria-label="Enlarge: the world map"><img src="media/ah_map.jpg" alt="The world map showing Blackmere Marsh, the Hollow Wood, the Old Watchtower and Ashford Village with waystones" loading="lazy"></button><figcaption>The world map, painted by the generator from the world it builds, under each player's own fog of war.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_atmosphere.jpg" aria-label="Enlarge: day, rain, dusk and night"><img src="media/ah_atmosphere.jpg" alt="The same village shown at day, in rain, at dusk and at night" loading="lazy"></button><figcaption>Day, rain, dusk and night. The server replicates the rule, not the value: 0 B/s extra.</figcaption></figure>
-        <figure><button type="button" data-full="media/ah_ruins.jpg" aria-label="Enlarge: the ruined watchtower"><img src="media/ah_ruins.jpg" alt="The knight walking through the ruined watchtower area" loading="lazy"></button><figcaption>The ruined watchtower, where the mini-boss waits.</figcaption></figure>
-        <figure><button type="button" data-full="media/ah_village.jpg" aria-label="Enlarge: forest path and village"><img src="media/ah_village.jpg" alt="Forest path and cottages with chimney smoke" loading="lazy"></button><figcaption>Village and forest path, built from code by an editor commandlet.</figcaption></figure>
       </div>
+      <p class="cap">Built with Unreal Editor 5.8, Visual Studio 2022 and Claude Code. Art and audio from the Ninja Adventure pack (CC0).</p>
     </div>
   </section>
 
