@@ -162,7 +162,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     <div>
       <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
       <h1>Gameplay AI<span>&amp; NPC systems</span></h1>
-      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI and a two-phase boss, crowd NPC work from a studio project, and my final-year action game.</p>
+      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, crafting and player trading, crowd NPC work from a studio project, and my final-year action game.</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
         <a class="btn" href="Hassam_Aslam_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
@@ -173,13 +173,13 @@ footer p{max-width:56ch;margin:0 0 22px}
     <aside class="bb" aria-label="How my work maps to an AI NPC brief">
       <div class="bb-head"><b>BB_Brief</b><span>key → where to see it</span></div>
       <dl>
-        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 29,000 lines of C++.</dd></div>
+        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 39,000 lines of C++.</dd></div>
         <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#field">Field Correspondent</a>: a tree per mode, six custom C++ nodes. <a href="#ashford">Ashford Hollow</a>: four trees (one runs a two-phase boss), five custom nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
         <div class="bb-row"><dt>NavMesh &amp; NPC navigation</dt><dd>A guide that waits for you, Detour crowd avoidance, EQS-picked positions, a pack that flanks without colliding.</dd></div>
-        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; three quest givers with dialog and per-player markers; enemies that lie in ambush and rise as a pack; crowds that react to player powers.</dd></div>
+        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; three quest givers with dialog and per-player markers; enemies that lie in ambush and rise as a pack; wolves you can lure away with bait; crowds that react to player powers.</dd></div>
         <div class="bb-row"><dt>Language models in the loop</dt><dd><a href="#field">Field Correspondent</a>: tool calls checked in C++, answers that cite their sources, memories from AI Perception.</dd></div>
-        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, abilities, statuses, boss phases, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
-        <div class="bb-row"><dt>Networked NPCs</dt><dd><a href="#ashford">Ashford Hollow</a>: AI runs on the server, clients predict only what feels instant, and every fix is measured (server corrections in a fight 534 to 121).</dd></div>
+        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, recipes, upgrades, abilities, statuses, boss phases, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
+        <div class="bb-row"><dt>Networked NPCs</dt><dd><a href="#ashford">Ashford Hollow</a>: AI runs on the server, clients predict only what feels instant, and every fix is measured (server corrections in a fight 534 to 121). Smoke hides players from AI sight through the engine's own sight interface.</dd></div>
       </dl>
     </aside>
   </div>
@@ -301,7 +301,7 @@ footer p{max-width:56ch;margin:0 0 22px}
           <p class="p-index">Solo project · 2026</p>
           <h2>Ashford Hollow</h2>
         </div>
-        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li><li>5 streamed zones</li></ul>
+        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li><li>5 streamed zones</li><li>Crafting &amp; trading</li></ul>
       </div>
       <div class="p-grid">
         <div>
@@ -309,7 +309,7 @@ footer p{max-width:56ch;margin:0 0 22px}
           <p class="cap">The Hollow Abbot's second phase: Pyre Rain fills a circle under each player while the dead around the chamber rise. The phase is one replicated byte; every client derives the new form from it. A replay frame.</p>
         </div>
         <div class="p-text">
-          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server, across five streamed zones: a village, a forest with a hidden glade, a ruined watchtower, Blackmere Marsh and the Old Abbey Crypt. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, every map and behavior tree is generated by editor commandlets, and art came from a CC0 pack.</p>
+          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server, across five streamed zones: a village, a forest with a hidden glade, a ruined watchtower, Blackmere Marsh and the Old Abbey Crypt. On top of the fighting sits an item loop: gather, craft at stations, carry bombs and tools on the belt, forge permanent upgrades and trade with other players, all saved per player. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, every map and behavior tree is generated by editor commandlets, and art came from a CC0 pack.</p>
           <h3>Enemy AI</h3>
           <ul class="list">
             <li>One <code>AAHEnemyAIController</code> with AI Perception (sight) and a behavior tree per enemy type, all sharing one Blackboard</li>
@@ -318,7 +318,10 @@ footer p{max-width:56ch;margin:0 0 22px}
             <li>Mini-boss: telegraphed slam and lane dash, with an observer abort that cuts the chase the moment an attack fits</li>
             <li>Two-phase boss: phases are data (health threshold, look, moveset, granted abilities). At half health the Hollow Abbot ignites, wakes the dead and gains Pyre Rain. One tree serves both phases: the new attack simply fails until it's granted</li>
             <li>Ambushers: kappas wait under the bog water and skeletons lie as bones, then surface as a pack when you come close</li>
-            <li>Statuses the AI respects: any stun-type status (a stun, a kappa submerged, a boss transforming) holds the brain still, with no AI code per status</li>
+            <li>Statuses the AI respects: any stun-type status (a stun, a kappa submerged, a boss transforming, a frost bomb freezing it solid) holds the brain still, with no AI code per status</li>
+            <li>Smoke the AI can't see through: characters implement the engine's <code>IAISightTargetInterface</code>, so perception itself can't see a player inside a smoke cloud. The tracking service drops them at once and a "?" pops over each enemy; landing a hit gives you away</li>
+            <li>Bait: a wolf lure sets a <code>LureLocation</code> Blackboard key, and the wolf tree's Take Bait branch (an observer abort) walks to it and eats. A hit breaks it for good, so bait is a distraction, not a free kill</li>
+            <li>Kappas keep away from torchlight: the states an enemy shuns are data, read by its ambush check and its target tracking</li>
             <li>NavMesh pathing with Detour crowd avoidance, so packs flow around each other; burning ground is a NavMesh obstacle they path around</li>
           </ul>
         </div>
@@ -327,11 +330,18 @@ footer p{max-width:56ch;margin:0 0 22px}
       <div class="deep">
         <div class="panel">
           <h3>BT_Wolf, as built</h3>
-          <p>The trees and EQS queries are generated by a C++ commandlet as real editor graphs, so they open and edit like hand-made ones. This is the wolf's.</p>
+          <p>The trees and EQS queries are generated by a C++ commandlet as real editor graphs, so they open and edit like hand-made ones. This is the wolf's: a stun holds it, bait outranks a player, then the hunt.</p>
           <div class="bt" role="tree" aria-label="Wolf behavior tree">
             <ul>
               <li><span class="node"><span class="tag t-comp">Selector</span><b>Wolf</b><span class="tag t-svc">Track Target</span></span>
                 <ul>
+                  <li><span class="node"><span class="tag t-task">Wait</span>Reel<span class="tag t-deco">Incapacitated</span></span></li>
+                  <li><span class="node"><span class="tag t-comp">Sequence</span><b>Take Bait</b><span class="tag t-deco">Smells Bait</span></span>
+                    <ul>
+                      <li><span class="node"><span class="tag t-task">Move To</span>Go to the bait</span></li>
+                      <li><span class="node"><span class="tag t-task">Wait</span>Eat 1 s</span></li>
+                    </ul>
+                  </li>
                   <li><span class="node"><span class="tag t-comp">Sequence</span><b>Hunt</b><span class="note">needs a target</span></span>
                     <ul>
                       <li><span class="node"><span class="tag t-comp">Selector</span><b>Bite or Circle</b></span>
@@ -364,14 +374,14 @@ footer p{max-width:56ch;margin:0 0 22px}
         <div class="p-text">
           <h3>Custom behavior tree nodes</h3>
           <ul class="list">
-            <li><code>BTService_AHTrackTarget</code>: writes perception results to the Blackboard (target, distance, line of sight)</li>
+            <li><code>BTService_AHTrackTarget</code>: writes perception results to the Blackboard (target, distance, line of sight), and drops a target hidden by smoke or one this enemy shuns</li>
             <li><code>BTTask_AHUseAbility</code>: lets the tree fire Gameplay Abilities</li>
             <li><code>BTTask_AHCircleTarget</code>, <code>BTDecorator_AHAttackToken</code>, <code>BTDecorator_AHTargetInRange</code> with observer aborts</li>
           </ul>
           <h3>NPCs and quests</h3>
           <ul class="list">
             <li>Three quest givers with an interaction prompt, typewriter dialog and per-player quest markers</li>
-            <li>Data-driven quests, a quest log per player and shared credit for the party; objectives count kills and world events (vents sealed, braziers lit)</li>
+            <li>Data-driven quests, a quest log per player and shared credit for the party; objectives count kills and world events (vents sealed, braziers lit, things crafted), and rewards can teach recipes</li>
           </ul>
           <h3>Lag compensation, measured</h3>
           <p style="font-size:.92rem;color:var(--muted)">The server rewinds melee targets by the attacker's round trip. A scripted client swung at three circling wolves for 25 s; a ghost hit is a spark the client showed that the server then rejected.</p>
@@ -402,6 +412,25 @@ footer p{max-width:56ch;margin:0 0 22px}
         </div>
       </div>
 
+      <div class="p-grid" style="margin-top:48px">
+        <div>
+          <div class="media pixel" data-gallery><button type="button" data-full="media/ah_trade.jpg" aria-label="Enlarge: trading between two players"><img src="media/ah_trade.jpg" alt="A trade window between two players: your offer of two potions, a fire bomb and 20 gold on the left, the other player's wood and stone on the right, the message 'Their offer changed: check it again', and the bag open beside it" loading="lazy"></button></div>
+          <p class="cap">A trade between two clients on a dedicated server. The other player has just changed their offer, so both locks cleared and the message says so: you can only ever confirm the deal on your screen.</p>
+        </div>
+        <div class="p-text">
+          <h3>Items, crafting and trading</h3>
+          <ul class="list">
+            <li>A 20-slot bag and a belt the owning client predicts with the server's own rules: numbered requests, answered in the same update as the bag. Using an item is a Gameplay Ability whose cost is the item</li>
+            <li>Gathering nodes are per player. When one empties, its regrow time replicates once as a server timestamp, so nothing is sent when it grows back</li>
+            <li>Crafting is a predicted ability whose inputs are its cost, and it finishes on the server's clock. Letting the client's earlier finish through had quietly refunded every client's craft: the scripted network tests caught it</li>
+            <li>Bombs and tools are items. One data-driven ground field covers fire, frost (stand on it and you freeze), smoke, oil and caltrops, and fire turns oil into a blaze</li>
+            <li>Forge upgrades are owned per player, saved, and applied as one gameplay effect holding the totals</li>
+            <li>Trading: nothing leaves a bag until both players confirm the same revision of both offers, then one server function re-checks counts and bag room and swaps everything. The session replicates only to its two players</li>
+          </ul>
+          <p style="font-size:.92rem;color:var(--muted)">Two players throwing bombs and crafting on a dedicated server: 1.5 to 1.8 ms of server game thread a tick, 2 to 4 KB/s per client. A replay of it shows every burst, field and status from replicated state alone.</p>
+        </div>
+      </div>
+
       <div class="gallery pixel" data-gallery>
         <figure><button type="button" data-full="media/ah_marsh.jpg" aria-label="Enlarge: a kappa bursting out of the bog"><img src="media/ah_marsh.jpg" alt="A marsh pool ringed with reeds and lily pads; a kappa bursts out of the water in a splash beside one player while another stands on the bank" loading="lazy"></button><figcaption>Blackmere Marsh: a kappa bursts out of the bog as a player wades close. A replay frame, so it's all replicated state.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_crypt.jpg" aria-label="Enlarge: the Old Abbey Crypt"><img src="media/ah_crypt.jpg" alt="A torchlit crypt hall with the zone title Old Abbey Crypt, a ladder up, Brother Aldric with a quest marker, and an ossuary of bones to the left" loading="lazy"></button><figcaption>The Old Abbey Crypt: rooms carved by the generator, a ghost with a quest, bones that will stand up.</figcaption></figure>
@@ -409,6 +438,9 @@ footer p{max-width:56ch;margin:0 0 22px}
         <figure><button type="button" data-full="media/ah_status.jpg" aria-label="Enlarge: statuses on the guardian"><img src="media/ah_status.jpg" alt="The Watchtower Guardian stunned and burning; status icons under its health bar and beside the player's frame" loading="lazy"></button><figcaption>Statuses as data: the guardian stunned and burning, the player slowed. Icons are drawn from replicated tags.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_map.jpg" aria-label="Enlarge: the world map"><img src="media/ah_map.jpg" alt="The world map showing Blackmere Marsh, the Hollow Wood, the Old Watchtower and Ashford Village with waystones" loading="lazy"></button><figcaption>The world map, painted by the generator from the world it builds, under each player's own fog of war.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_atmosphere.jpg" aria-label="Enlarge: day, rain, dusk and night"><img src="media/ah_atmosphere.jpg" alt="The same village shown at day, in rain, at dusk and at night" loading="lazy"></button><figcaption>Day, rain, dusk and night. The server replicates the rule, not the value: 0 B/s extra.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_smoke.jpg" aria-label="Enlarge: a smoke bomb"><img src="media/ah_smoke.jpg" alt="A thick smoke cloud over a player in the forest, with wolves standing outside it" loading="lazy"></button><figcaption>A smoke bomb: AI sight can't see a player in the cloud, so the wolves drop the chase. The cloud draws over everyone inside it.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_lure.jpg" aria-label="Enlarge: wolves taking the bait at night"><img src="media/ah_lure.jpg" alt="At night in the forest, a player holding a torch while wolves crowd around a piece of bait with hearts over their heads" loading="lazy"></button><figcaption>A wolf lure at night: the bait sets a Blackboard key and the Take Bait branch takes over. The torchlight is a status that carries a light.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_forge.jpg" aria-label="Enlarge: the forge"><img src="media/ah_forge.jpg" alt="The forge's crafting window: caltrops, Honed Blade being forged with a progress bar, Padded Jerkin, and Moonsilver Edge locked with 'Needs: Honed Blade', next to the furnace and anvil in the village" loading="lazy"></button><figcaption>The forge: recipes as data, a permanent upgrade in progress, and one that needs it first.</figcaption></figure>
       </div>
       <p class="cap">Built with Unreal Editor 5.8, Visual Studio 2022 and Claude Code. Art and audio from the Ninja Adventure pack (CC0).</p>
     </div>
