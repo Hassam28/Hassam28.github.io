@@ -162,7 +162,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     <div>
       <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
       <h1>Gameplay AI<span>&amp; NPC systems</span></h1>
-      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, crafting and player trading, crowd NPC work from a studio project, and my final-year action game.</p>
+      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, crafting and player trading, crowd NPC work from a studio project, and my final-year action game. Each one comes with its own <a href="#ui">UI</a>.</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
         <a class="btn" href="Hassam_Aslam_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
@@ -179,6 +179,7 @@ footer p{max-width:56ch;margin:0 0 22px}
         <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; three quest givers with dialog and per-player markers; enemies that lie in ambush and rise as a pack; wolves you can lure away with bait; crowds that react to player powers.</dd></div>
         <div class="bb-row"><dt>Language models in the loop</dt><dd><a href="#field">Field Correspondent</a>: tool calls checked in C++, answers that cite their sources, memories from AI Perception.</dd></div>
         <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, recipes, upgrades, abilities, statuses, boss phases, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
+        <div class="bb-row"><dt>Game UI &amp; HUD</dt><dd><a href="#ui">Game UI</a>: HUDs, dialog and quest tracking, crafting and trade windows, maps, and a live overlay that shows what the AI is thinking.</dd></div>
         <div class="bb-row"><dt>Networked NPCs</dt><dd><a href="#ashford">Ashford Hollow</a>: AI runs on the server, clients predict only what feels instant, and every fix is measured (server corrections in a fight 534 to 121). Smoke hides players from AI sight through the engine's own sight interface.</dd></div>
       </dl>
     </aside>
@@ -446,7 +447,64 @@ footer p{max-width:56ch;margin:0 0 22px}
     </div>
   </section>
 
-  <!-- 3. Moshpit -->
+  <!-- 3. Game UI -->
+  <section class="project" id="ui">
+    <div class="wrap">
+      <div class="p-head">
+        <div>
+          <p class="p-index">Across my projects</p>
+          <h2>Game UI</h2>
+        </div>
+        <ul class="meta"><li>HUD</li><li>Dialog &amp; quests</li><li>Crafting &amp; trade</li><li>Maps</li><li>AI debug overlay</li></ul>
+      </div>
+      <div class="p-grid">
+        <div>
+          <div class="media" data-gallery><button type="button" data-full="media/ui_ah_quest.jpg" aria-label="Enlarge: accepting a quest in Ashford Hollow"><img src="media/ui_ah_quest.jpg" alt="Two game windows side by side in the Old Abbey Crypt. Left, a client talks to Brother Aldric: a dialog box with his portrait is typing out 'The abbot never left. He burns', a 'Quest accepted' banner reads The Abbot's Rest, and the tracker lists 'Chapel braziers lit 0/3' and 'The Hollow Abbot laid to rest 0/1'. Right, the host's ability bar shows a dodge on Space and locked slots marked Lv2 to Lv5. Both have party frames, a minimap reading 'No map below ground' and the zone name" loading="lazy"></button></div>
+          <p class="cap">Ashford Hollow, client (left) and host (right). Talking to Brother Aldric: his dialog types out, "Quest accepted" appears and the tracker lists the new objectives. On the right, locked ability slots show the level they open at.</p>
+          <div class="p-text" style="margin-top:28px">
+            <h3>Field Correspondent</h3>
+            <ul class="list">
+              <li>A chat panel that streams the reply as it arrives, shows each action and refusal in line, and tags every source the NPC cites</li>
+              <li>A line under each reply with the time to the first word, the total time, sources cited, model calls and actions</li>
+              <li>An F3 overlay: the model provider, the behavior tree node it's in, its memories, and the search scores behind each answer</li>
+              <li>Dispatches as newsprint cards that list their sources, and a board in the level that updates when one is filed</li>
+            </ul>
+            <h3>Final-year project</h3>
+            <ul class="list">
+              <li>A skill tree in three branches with locked tiers, and level-up notifications</li>
+            </ul>
+          </div>
+        </div>
+        <div class="p-text">
+          <p>Each project here has its own interface, built together with the systems it shows. In the multiplayer RPG the UI only draws what the replicated game state says, so each player sees their own quests, map and bag on their own screen. In the NPC project it shows what the AI is doing and why.</p>
+          <h3>Ashford Hollow</h3>
+          <ul class="list">
+            <li>HUD: party frames with level and health, an XP bar, a boss bar that names the phase, and an ability bar whose locked slots show the level they open at</li>
+            <li>Quests: a Talk prompt, dialog with a portrait and typewriter text, a "Quest accepted" banner, per-player markers, and a tracker that ticks objectives off</li>
+            <li>Levelling: XP and gold pop-ups, a "Level 2, learned Shield Bash" banner, and the new ability lighting up on the bar with its cooldown</li>
+            <li>Finding your way: a title for each zone, a minimap, and a world map painted from the generated world under each player's own fog of war</li>
+            <li>Windows: the bag and belt, the forge's crafting window with progress and locked recipes, and a trade window that clears both players' confirmations whenever either offer changes</li>
+            <li>Feedback: status icons drawn from replicated gameplay tags, and damage numbers that wait for the server to confirm the hit</li>
+            <li>The UI style is a data asset, like the rest of the game's content</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gallery" data-gallery>
+        <figure><button type="button" data-full="media/ui_ah_levelup.jpg" aria-label="Enlarge: levelling up"><img src="media/ui_ah_levelup.jpg" alt="Both players reach Level 2: '+26 XP' and 'Level up!' pop-ups over the characters, a 'Level 2, Learned Shield Bash' banner, 'New ability: Shield Bash' above the ability bar, and '+3 Gold Coin' in the corner" loading="lazy"></button><figcaption>Level 2 on both screens: XP pop-ups, a banner naming the new ability, and the ability unlocking on the bar.</figcaption></figure>
+        <figure><button type="button" data-full="media/ui_ah_zone.jpg" aria-label="Enlarge: entering a zone"><img src="media/ui_ah_zone.jpg" alt="Entering the Old Watchtower: a zone title 'The Old Watchtower, its guardian still keeps watch', a round minimap of the area, and the quest tracker" loading="lazy"></button><figcaption>Entering the Old Watchtower: the zone title, the minimap and the quest tracker.</figcaption></figure>
+        <figure><button type="button" data-full="media/ui_ah_boss.jpg" aria-label="Enlarge: during the boss fight"><img src="media/ui_ah_boss.jpg" alt="During the Hollow Abbot fight: the boss bar at the top, a 'Level 4, Learned Whirlwind' banner, the ability bar with cooldowns, and the tracker showing 'Chapel braziers lit 3/3' ticked off" loading="lazy"></button><figcaption>The boss fight: the Hollow Abbot's bar, Level 4 with Whirlwind, and the braziers objective ticked off.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_trade.jpg" aria-label="Enlarge: the trade window"><img src="media/ah_trade.jpg" alt="A trade window between two players with both offers, the message 'Their offer changed: check it again', and the bag open beside it" loading="lazy"></button><figcaption>The trade window: both players confirm the same version of both offers, or nothing moves.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_forge.jpg" aria-label="Enlarge: the crafting window"><img src="media/ah_forge.jpg" alt="The forge's crafting window with a Honed Blade in progress and Moonsilver Edge locked behind it" loading="lazy"></button><figcaption>The forge: recipes as data, an upgrade in progress, and one locked behind it.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_map.jpg" aria-label="Enlarge: the world map"><img src="media/ah_map.jpg" alt="The world map showing Blackmere Marsh, the Hollow Wood, the Old Watchtower and Ashford Village with waystones" loading="lazy"></button><figcaption>The world map, under each player's own fog of war.</figcaption></figure>
+        <figure><button type="button" data-full="media/ui_fc_chat.jpg" aria-label="Enlarge: the Correspondent's chat panel"><img src="media/ui_fc_chat.jpg" alt="The chat panel: the visitor asks 'What was that?' and the Correspondent answers from memory, citing K3, with a tag 'K3 Memory: heard a delivery at the lobby's side door (09:01)' and a timing line underneath" loading="lazy"></button><figcaption>Field Correspondent's chat: a streamed answer that cites a memory, with timing underneath.</figcaption></figure>
+        <figure><button type="button" data-full="media/ui_fc_debug.jpg" aria-label="Enlarge: the F3 debug overlay"><img src="media/ui_fc_debug.jpg" alt="The F3 debug overlay listing the provider, the AI's current node, memories, knowledge sources, the retrieval scores for three chunks and the reply timing" loading="lazy"></button><figcaption>The F3 overlay: AI state, memories and the search scores behind the answer.</figcaption></figure>
+        <figure><button type="button" data-full="media/fyp_skills.jpg" aria-label="Enlarge: the skill tree"><img src="media/fyp_skills.jpg" alt="Skill tree with Combat, Mobility and Attribute branches over gameplay" loading="lazy"></button><figcaption>Final-year project: the skill tree, three branches with locked tiers.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Moshpit -->
   <section class="project" id="moshpit">
     <div class="wrap">
       <div class="p-head">
@@ -486,7 +544,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     </div>
   </section>
 
-  <!-- 4. FYP -->
+  <!-- 5. FYP -->
   <section class="project" id="fyp">
     <div class="wrap">
       <div class="p-head">
