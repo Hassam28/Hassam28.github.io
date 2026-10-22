@@ -162,7 +162,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     <div>
       <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
       <h1>Gameplay AI<span>&amp; NPC systems</span></h1>
-      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, crafting and player trading, crowd NPC work from a studio project, and my final-year action game. Each one comes with its own <a href="#ui">UI</a>.</p>
+      <p class="lede">I build NPCs that perceive, decide and act: AI Controllers, behavior trees, EQS and NavMesh, written in C++ and Blueprints. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, a village that keeps its own hours, crafting, trading, parties and chat, crowd NPC work from a studio project, and my final-year action game. Each one comes with its own <a href="#ui">UI</a>.</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
         <a class="btn" href="Hassam_Aslam_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
@@ -173,14 +173,14 @@ footer p{max-width:56ch;margin:0 0 22px}
     <aside class="bb" aria-label="How my work maps to an AI NPC brief">
       <div class="bb-head"><b>BB_Brief</b><span>key → where to see it</span></div>
       <dl>
-        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 39,000 lines of C++.</dd></div>
-        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#field">Field Correspondent</a>: a tree per mode, six custom C++ nodes. <a href="#ashford">Ashford Hollow</a>: four trees (one runs a two-phase boss), five custom nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
+        <div class="bb-row"><dt>Unreal Engine 5, C++ &amp; Blueprints</dt><dd>All projects. <a href="#ashford">Ashford Hollow</a> is about 49,000 lines of C++.</dd></div>
+        <div class="bb-row"><dt>AI Controller &amp; Behavior Trees</dt><dd><a href="#field">Field Correspondent</a>: a tree per mode, six custom C++ nodes. <a href="#ashford">Ashford Hollow</a>: five trees (one runs a two-phase boss, one a villager's day), six custom nodes. <a href="#moshpit">Moshpit Studios</a>: crowd NPCs.</dd></div>
         <div class="bb-row"><dt>NavMesh &amp; NPC navigation</dt><dd>A guide that waits for you, Detour crowd avoidance, EQS-picked positions, a pack that flanks without colliding.</dd></div>
-        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; three quest givers with dialog and per-player markers; enemies that lie in ambush and rise as a pack; wolves you can lure away with bait; crowds that react to player powers.</dd></div>
+        <div class="bb-row"><dt>Interactive NPCs</dt><dd>An NPC you talk to that guides, follows, investigates and reports; three quest givers with dialog and per-player markers; villagers who work, shelter from the rain and light the lamps at dusk; enemies that lie in ambush and rise as a pack; wolves you can lure away with bait; crowds that react to player powers.</dd></div>
         <div class="bb-row"><dt>Language models in the loop</dt><dd><a href="#field">Field Correspondent</a>: tool calls checked in C++, answers that cite their sources, memories from AI Perception.</dd></div>
-        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, recipes, upgrades, abilities, statuses, boss phases, movesets, UI style and weather defined as data assets, not hard-coded.</dd></div>
-        <div class="bb-row"><dt>Game UI &amp; HUD</dt><dd><a href="#ui">Game UI</a>: HUDs, dialog and quest tracking, crafting and trade windows, maps, and a live overlay that shows what the AI is thinking.</dd></div>
-        <div class="bb-row"><dt>Networked NPCs</dt><dd><a href="#ashford">Ashford Hollow</a>: AI runs on the server, clients predict only what feels instant, and every fix is measured (server corrections in a fight 534 to 121). Smoke hides players from AI sight through the engine's own sight interface.</dd></div>
+        <div class="bb-row"><dt>Data-driven systems</dt><dd>Quests, items, recipes, upgrades, abilities, statuses, boss phases, movesets, villager schedules, wildlife, chat rules, UI style and weather defined as data assets, not hard-coded.</dd></div>
+        <div class="bb-row"><dt>Game UI &amp; HUD</dt><dd><a href="#ui">Game UI</a>: HUDs, dialog and quest tracking, crafting and trade windows, a party window and chat, maps, and a live overlay that shows what the AI is thinking.</dd></div>
+        <div class="bb-row"><dt>Networked NPCs</dt><dd><a href="#ashford">Ashford Hollow</a>: AI runs on the server, clients predict only what feels instant, and every fix is measured (server corrections in a fight 534 to 121). Each villager's day is one replicated struct that every client reads the same way. Smoke hides players from AI sight through the engine's own sight interface.</dd></div>
       </dl>
     </aside>
   </div>
@@ -302,15 +302,15 @@ footer p{max-width:56ch;margin:0 0 22px}
           <p class="p-index">Solo project · 2026</p>
           <h2>Ashford Hollow</h2>
         </div>
-        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li><li>5 streamed zones</li><li>Crafting &amp; trading</li></ul>
+        <ul class="meta"><li>UE 5.8</li><li>C++</li><li>Gameplay Ability System</li><li>2–4 players, server-authoritative</li><li>5 streamed zones</li><li>Crafting &amp; trading</li><li>Parties &amp; chat</li></ul>
       </div>
       <div class="p-grid">
         <div>
-          <div class="media pixel" data-gallery><button type="button" data-full="media/ah_abbot.jpg" aria-label="Enlarge: the Hollow Abbot ablaze"><img src="media/ah_abbot.jpg" alt="Two players in a torchlit crypt chamber with a burning spirit boss; a fire telegraph circle fills under one player, skeletons stand around the room, and the boss bar reads The Hollow Abbot - Ablaze" loading="eager"></button></div>
-          <p class="cap">The Hollow Abbot's second phase: Pyre Rain fills a circle under each player while the dead around the chamber rise. The phase is one replicated byte; every client derives the new form from it. A replay frame.</p>
+          <div class="media"><video data-autoplay src="media/ah_reel.mp4" poster="media/ah_reel_poster.jpg" muted loop playsinline preload="none" controls aria-label="Ashford Hollow gameplay reel"></video></div>
+          <p class="cap">Recorded in engine on a listen server: the village's day, rain and dusk; blocks, parries and an unblockable slam; then a second player joins the party and chats. The captions are part of the game's own HUD.</p>
         </div>
         <div class="p-text">
-          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server, across five streamed zones: a village, a forest with a hidden glade, a ruined watchtower, Blackmere Marsh and the Old Abbey Crypt. On top of the fighting sits an item loop: gather, craft at stations, carry bombs and tools on the belt, forge permanent upgrades and trade with other players, all saved per player. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, every map and behavior tree is generated by editor commandlets, and art came from a CC0 pack.</p>
+          <p>A medieval top-down pixel-art RPG slice for two to four players over a listen or dedicated server, across five streamed zones: a village, a forest with a hidden glade, a ruined watchtower, Blackmere Marsh and the Old Abbey Crypt. The village keeps its own hours, and the fighting has a guard and a parry the server judges fairly under lag. Around it sit an item loop (gather, craft at stations, carry bombs and tools on the belt, forge permanent upgrades, trade with other players, all saved per player) and a social layer: parties and chat. The server decides every outcome; clients predict only what makes the game feel instant. Every gameplay system is C++, every map and behavior tree is generated by editor commandlets, and art came from a CC0 pack.</p>
           <h3>Enemy AI</h3>
           <ul class="list">
             <li>One <code>AAHEnemyAIController</code> with AI Perception (sight) and a behavior tree per enemy type, all sharing one Blackboard</li>
@@ -432,7 +432,78 @@ footer p{max-width:56ch;margin:0 0 22px}
         </div>
       </div>
 
+      <div class="p-grid" style="margin-top:48px">
+        <div>
+          <div class="media pixel" data-gallery><button type="button" data-full="media/ah_villagers.jpg" aria-label="Enlarge: the village at dusk"><img src="media/ah_villagers.jpg" alt="The village at dusk: lit windows and street lamps, villagers heading home along the road, and a speech bubble over one of them reading Wheat'll be ripe soon" loading="lazy"></button></div>
+          <p class="cap">Dusk in Ashford: Old Tobin has walked the street lighting each lamp by hand, and the villagers head home talking. Every client derives the same lines from the same replicated state.</p>
+        </div>
+        <div class="p-text">
+          <h3>Villagers with daily routines</h3>
+          <ul class="list">
+            <li>Six villagers on the same AI Controller stack as the enemies: AI Perception (sight, and hearing for combat noise) and a behavior tree, <code>BT_Villager</code></li>
+            <li>One service, <code>BTService_AHVillagerSchedule</code>, turns fright, rain and the hour into where to be: the forge, the stall, the field or the inn, a doorway when it rains, home when a fight breaks out nearby</li>
+            <li>A schedule is data: blocks of hours, each with a spot, a work animation and lines to say</li>
+            <li>The lamplighter walks the street at dusk and lights each lamp by hand; each lamp is one replicated bool</li>
+            <li>One replicated struct per villager: what they're doing and the server time they started. Every client derives the work beats, lines and chatter from it, with a hash that's the same on every machine, so two players hear the smith say the same thing. 0.004 ms a frame for the presentation, 0.005 ms for the AI</li>
+          </ul>
+          <h3>A world that reacts</h3>
+          <ul class="list">
+            <li>Wildlife as data on placed spawners: hens, sparrows, boar, a racoon, owls, frogs, fish, bats and rats, simulated on each client with no actor per animal and nothing replicated. They flee anyone that client can see and the noise of a fight; fish leap on a server-time hash, so every client sees the same leap</li>
+            <li>Grass parts around every character through one render-target interaction buffer the plant material reads per vertex: no cost per plant</li>
+            <li>Footsteps from each walk cycle's contact frames, with the surface read from the ground's physical material; rain wets the ground and fills puddles; lanterns, signs, banners and flags swing in the replicated wind</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="p-grid" style="margin-top:48px">
+        <div>
+          <div class="media pixel" data-gallery><button type="button" data-full="media/ah_parry.jpg" aria-label="Enlarge: a parry"><img src="media/ah_parry.jpg" alt="Close-up of the knight parrying a wolf's bite: a 'Parry!' callout, a flash, and the wolf dazed with crosses for eyes while two more wolves wait" loading="lazy"></button></div>
+          <p class="cap">A parry: the wolf reels, the knight's next hit does double. The defender's own screen shows it the moment the bite lands; the server confirms it.</p>
+        </div>
+        <div class="p-text">
+          <h3>Guard and parry, judged by what the defender saw</h3>
+          <ul class="list">
+            <li>Hold guard: a buckler comes up, you walk slower and stamina drains. A hit inside the guard's 220° arc does a fifth of its damage and costs stamina; run out and the guard breaks</li>
+            <li>Guard within 0.2 s of a bite and it's a parry: no damage, the attacker staggers, and your next hit within 1.5 s does double. Mashing the button gets blocks, not parries</li>
+            <li>Some boss attacks are unblockable, drawn violet and hatched so they don't rely on colour alone</li>
+            <li>The netcode: a press reaches the server after the bite it answered has already landed there. So the press carries the server time the player was looking at; the server bounds that claim by the player's measured lag, holds hits on them that long (0.15 s at most) and judges the guard as it was at the hit. The parry's look is predicted on the defender's screen, so the big moment is never late</li>
+            <li>Measuring it found an engine detail: a client's estimate of the server clock trails it by the one-way trip. Adding the trip back took blocks at 100 ms each way from 1 in 20 to 19 in 20</li>
+          </ul>
+          <p style="font-size:.92rem;color:var(--muted)">A bot pressing guard 30 ms before each wolf bite showed on its screen (a last-moment human reaction), dedicated server, 100 ms each way.</p>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Server hold</th><th class="num">Bites</th><th class="num">Parried</th></tr></thead>
+              <tbody>
+                <tr><td>off</td><td class="num">22</td><td class="num">0</td></tr>
+                <tr><td>on</td><td class="num">37</td><td class="num"><strong>34</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:.92rem;color:var(--muted)">The client predicted 36 parries and the server confirmed 34; for the other two its verdict played a beat later.</p>
+        </div>
+      </div>
+
+      <div class="p-grid" style="margin-top:48px">
+        <div>
+          <div class="media pixel" data-gallery><button type="button" data-full="media/ah_chat.jpg" aria-label="Enlarge: chat and speech bubbles"><img src="media/ah_chat.jpg" alt="Two players side by side in the village, each with a speech bubble: 'anyone up for a hunt in the forest tonight?' over one and 'meet me at the forge' in party blue over the other; the chat log at the bottom left shows a party line and a zone line" loading="lazy"></button></div>
+          <p class="cap">Zone chat (a bubble everyone nearby sees) and party chat (blue, members only). Bubbles stack and never cover a name.</p>
+        </div>
+        <div class="p-text">
+          <h3>Parties and chat</h3>
+          <ul class="list">
+            <li>Parties of up to four: invite the player you face, answer within 30 s, leave, remove, hand over the lead. A party window, frames and map markers for your party, an arrow at the screen's edge for a member out of view, nameplates with level in the party colour</li>
+            <li>A party replicates to its members only: with three players and two in a party, the outsider's machine holds no party actor at all. Your party and your invite are owner-only on your PlayerState</li>
+            <li>Every request is checked and rate-limited by the server. A repeat invite isn't sent again and a decline blocks repeats for 20 s, so nobody can pester a player</li>
+            <li>XP, quest progress and a personal loot roll go to everyone who fought and their party members near the kill</li>
+            <li>Chat on zone, party and whisper, with slash commands. The server rate-limits every line, checks its length, strips control and invisible characters (text-direction overrides included), refuses repeats and filters whole words through letter swaps, then routes it by its own idea of who's in the zone or the party</li>
+            <li>A zone line's bubble is replicated state on the speaker's pawn, so it reaches exactly the players who can see them, someone walking up mid-sentence sees the rest, and replays show it. Party bubbles are drawn by each member's own client</li>
+          </ul>
+          <p style="font-size:.92rem;color:var(--muted)">Dedicated server, three clients at 100 ms each way: zone lines reached 3 players, party lines 2, a whisper 1. Of 8 spammed lines, 4 got through. With one player in the ruins, each zone heard only its own.</p>
+        </div>
+      </div>
+
       <div class="gallery pixel" data-gallery>
+        <figure><button type="button" data-full="media/ah_abbot.jpg" aria-label="Enlarge: the Hollow Abbot ablaze"><img src="media/ah_abbot.jpg" alt="Two players in a torchlit crypt chamber with a burning spirit boss; a fire telegraph circle fills under one player, skeletons stand around the room, and the boss bar reads The Hollow Abbot - Ablaze" loading="lazy"></button><figcaption>The Hollow Abbot's second phase: Pyre Rain under each player while the dead rise. The phase is one replicated byte. A replay frame.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_marsh.jpg" aria-label="Enlarge: a kappa bursting out of the bog"><img src="media/ah_marsh.jpg" alt="A marsh pool ringed with reeds and lily pads; a kappa bursts out of the water in a splash beside one player while another stands on the bank" loading="lazy"></button><figcaption>Blackmere Marsh: a kappa bursts out of the bog as a player wades close. A replay frame, so it's all replicated state.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_crypt.jpg" aria-label="Enlarge: the Old Abbey Crypt"><img src="media/ah_crypt.jpg" alt="A torchlit crypt hall with the zone title Old Abbey Crypt, a ladder up, Brother Aldric with a quest marker, and an ossuary of bones to the left" loading="lazy"></button><figcaption>The Old Abbey Crypt: rooms carved by the generator, a ghost with a quest, bones that will stand up.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_boss.jpg" aria-label="Enlarge: the guardian's slam telegraph"><img src="media/ah_boss.jpg" alt="Top-down pixel-art knight standing in a boss slam telegraph circle at the ruined watchtower, with the Watchtower Guardian health bar at the top" loading="lazy"></button><figcaption>The Watchtower Guardian's slam. The warning's fill is synced to server time, half a round trip early on each client.</figcaption></figure>
@@ -442,6 +513,8 @@ footer p{max-width:56ch;margin:0 0 22px}
         <figure><button type="button" data-full="media/ah_smoke.jpg" aria-label="Enlarge: a smoke bomb"><img src="media/ah_smoke.jpg" alt="A thick smoke cloud over a player in the forest, with wolves standing outside it" loading="lazy"></button><figcaption>A smoke bomb: AI sight can't see a player in the cloud, so the wolves drop the chase. The cloud draws over everyone inside it.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_lure.jpg" aria-label="Enlarge: wolves taking the bait at night"><img src="media/ah_lure.jpg" alt="At night in the forest, a player holding a torch while wolves crowd around a piece of bait with hearts over their heads" loading="lazy"></button><figcaption>A wolf lure at night: the bait sets a Blackboard key and the Take Bait branch takes over. The torchlight is a status that carries a light.</figcaption></figure>
         <figure><button type="button" data-full="media/ah_forge.jpg" aria-label="Enlarge: the forge"><img src="media/ah_forge.jpg" alt="The forge's crafting window: caltrops, Honed Blade being forged with a progress bar, Padded Jerkin, and Moonsilver Edge locked with 'Needs: Honed Blade', next to the furnace and anvil in the village" loading="lazy"></button><figcaption>The forge: recipes as data, a permanent upgrade in progress, and one that needs it first.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_unblockable.jpg" aria-label="Enlarge: an unblockable slam"><img src="media/ah_unblockable.jpg" alt="The Watchtower Guardian raising its weapon inside a violet, hatched warning circle, with the knight beside it" loading="lazy"></button><figcaption>An unblockable slam: violet and hatched, it goes straight through a raised guard.</figcaption></figure>
+        <figure><button type="button" data-full="media/ah_party.jpg" aria-label="Enlarge: the party window"><img src="media/ah_party.jpg" alt="The party window listing two members with Lead and Remove buttons, two party frames at the top left with coloured edges, and the other player's blue nameplate in the village" loading="lazy"></button><figcaption>The party window on a listen-server host: frames edged in the party colour, a blue nameplate, party news in the chat.</figcaption></figure>
       </div>
       <p class="cap">Built with Unreal Editor 5.8, Visual Studio 2022 and Claude Code. Art and audio from the Ninja Adventure pack (CC0).</p>
     </div>
@@ -484,6 +557,7 @@ footer p{max-width:56ch;margin:0 0 22px}
             <li>Levelling: XP and gold pop-ups, a "Level 2, learned Shield Bash" banner, and the new ability lighting up on the bar with its cooldown</li>
             <li>Finding your way: a title for each zone, a minimap, and a world map painted from the generated world under each player's own fog of war</li>
             <li>Windows: the bag and belt, the forge's crafting window with progress and locked recipes, and a trade window that clears both players' confirmations whenever either offer changes</li>
+            <li>Social: a party window, party frames edged in the party colour, an arrow at the screen's edge for a party member out of view, and a chat box (Enter to type) with a colour per channel and speech bubbles that lift above names instead of covering them</li>
             <li>Feedback: status icons drawn from replicated gameplay tags, and damage numbers that wait for the server to confirm the hit</li>
             <li>The UI style is a data asset, like the rest of the game's content</li>
           </ul>
