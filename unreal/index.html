@@ -162,7 +162,7 @@ footer p{max-width:56ch;margin:0 0 22px}
     <div>
       <p class="eyebrow">Unreal Engine 5 · C++ · Blueprints · <a href="https://hassam28.github.io" target="_blank" rel="noopener">Main portfolio</a></p>
       <h1>Unreal Engine<span>Developer</span></h1>
-      <p class="lede">I build games and systems in Unreal Engine 5, in C++ and Blueprints: combat, enemy and NPC AI, multiplayer and UI. Below is a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, a village that keeps its own hours, crafting, trading, parties and chat, crowd NPC work from a studio project, and a third-person action RPG carried forward in UE 5.8 to a soulslike boss fight. Each one comes with its own <a href="#ui">UI</a>.</p>
+      <p class="lede">I build games and systems in Unreal Engine 5, in C++ and Blueprints: combat, enemy and NPC AI, multiplayer and UI. Below is a noir film-editing puzzle I led for the 2026 Epic AI MegaJam, a talking NPC whose language model has to ask C++ before it acts, a networked RPG with hand-built enemy AI, a two-phase boss, a village that keeps its own hours, crafting, trading, parties and chat, crowd NPC work from a studio project, and a third-person action RPG carried forward in UE 5.8 to a soulslike boss fight. Each one comes with its own <a href="#ui">UI</a>.</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:zeritress@gmail.com">Email me</a>
         <a class="btn" href="Hassam_Aslam_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
@@ -187,6 +187,46 @@ footer p{max-width:56ch;margin:0 0 22px}
 </header>
 
 <main>
+  <!-- 0. One Cut from Death -->
+  <section class="project" id="onecut">
+    <div class="wrap">
+      <div class="p-head">
+        <div>
+          <p class="p-index">Game jam · Development lead · Nov 2026</p>
+          <h2>One Cut from Death</h2>
+        </div>
+        <ul class="meta"><li>UE 5.9</li><li>C++</li><li>Slate UI</li><li>59 automated tests</li><li>AI-assisted development</li></ul>
+      </div>
+      <div class="p-grid">
+        <div>
+          <div class="media"><video data-autoplay src="media/onecut_reel.mp4" poster="media/onecut_poster.jpg" muted loop playsinline preload="none" controls aria-label="One Cut from Death gameplay reel"></video></div>
+          <p class="cap">The editing room and menu, cutting the film into strips, trying pairs on the playback machine, reassembling the film, and scenes playing on the machine's screen.</p>
+        </div>
+        <div class="p-text">
+          <p>A noir film-editing puzzle made in four days for the 2026 Epic AI MegaJam. You are a director in a postwar editing room: cut a 12-scene detective film into strips, try pairs on a playback machine, and reassemble the film in a new order. The order of the scenes decides whether the heroine dies or survives, and the goal is the cut where she lives, in as few cuts as possible.</p>
+          <h3>My part, as development lead</h3>
+          <ul class="list">
+            <li>Broke a 23-page design document into 39 tasks across two tracks, with a branch per task, and took the team to a packaged Windows build in four days</li>
+            <li>Game rules as plain C++ with no engine objects: cutting, a two-slot playback machine, assembly, and a story evaluator that plays any scene order against a data table and gives the verdict, covered by 59 automated tests</li>
+            <li>Engine side: a GameInstance subsystem that exposes the puzzle to Blueprint, a player controller with five work views on Enhanced Input, per-view cameras, in-world video playback, 3D film strips, an animated MetaHuman director and a Slate UI</li>
+            <li>Directed Claude Code and Codex as the main way of writing the code: wrote the briefs, set the rules, reviewed the results and chose between conflicting versions</li>
+            <li>After the deadline, fixed four problems from the designer's review (video playback, a cutting dead end, scene brightness and overlapping text) in one morning, confirmed in a new packaged build</li>
+          </ul>
+          <h3>The team</h3>
+          <ul class="list">
+            <li>Sami: environment, cameras, video playback Blueprints, mouse controls and final polish</li>
+            <li>A game designer, a 3D artist, a film team for the video clips, and audio</li>
+          </ul>
+        </div>
+      </div>
+      <div class="gallery" data-gallery>
+        <figure><button type="button" data-full="media/onecut_cutting.jpg" aria-label="Enlarge: cutting the film"><img src="media/onecut_cutting.jpg" alt="A film strip on the editing desk with the cut marker and the cut counter" loading="lazy"></button><figcaption>Cutting the film into strips.</figcaption></figure>
+        <figure><button type="button" data-full="media/onecut_machine.jpg" aria-label="Enlarge: playback machine"><img src="media/onecut_machine.jpg" alt="Playback machine with two strips loaded and a scene playing on its screen" loading="lazy"></button><figcaption>Trying a pair of strips on the machine.</figcaption></figure>
+        <figure><button type="button" data-full="media/onecut_assembly.jpg" aria-label="Enlarge: assembly bed"><img src="media/onecut_assembly.jpg" alt="Assembly bed with the reassembled film strip" loading="lazy"></button><figcaption>Reassembling the film in a new order.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <!-- 1. Field Correspondent -->
   <section class="project" id="field">
     <div class="wrap">
